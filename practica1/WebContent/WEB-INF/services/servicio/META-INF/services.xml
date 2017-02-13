@@ -6,9 +6,25 @@
         <parameter name="ServiceClass">org.example.www.servicio.ServicioSkeleton</parameter>
         <parameter name="useOriginalwsdl">true</parameter>
         <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="consultaCodigoPostal" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/servicio/">
+            <actionMapping>http://www.example.org/servicio/consultaCodigoPostal</actionMapping>
+            <outputActionMapping>http://www.example.org/servicio/servicio/consultaCodigoPostalResponse</outputActionMapping>
+        </operation>
         <operation name="validarNIF" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/servicio/">
             <actionMapping>http://www.example.org/servicio/validarNIF</actionMapping>
             <outputActionMapping>http://www.example.org/servicio/servicio/validarNIFResponse</outputActionMapping>
+        </operation>
+        <operation name="validarIBAN" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/servicio/">
+            <actionMapping>http://www.example.org/servicio/validarIBAN</actionMapping>
+            <outputActionMapping>http://www.example.org/servicio/servicio/validarIBANResponse</outputActionMapping>
+        </operation>
+        <operation name="generarPresupuesto" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/servicio/">
+            <actionMapping>http://www.example.org/servicio/generarPresupuesto</actionMapping>
+            <outputActionMapping>http://www.example.org/servicio/servicio/generarPresupuestoResponse</outputActionMapping>
+        </operation>
+        <operation name="solicitarPresupuesto" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/servicio/">
+            <actionMapping>http://www.example.org/servicio/solicitarPresupuesto</actionMapping>
+            <outputActionMapping>http://www.example.org/servicio/servicio/solicitarPresupuestoResponse</outputActionMapping>
         </operation>
     </service>
 </serviceGroup>

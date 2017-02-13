@@ -193,16 +193,58 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="servicioSOAP" type="tns:servicio">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="validarNIF">
-      <soap:operation soapAction="http://www.example.org/servicio/validarNIF"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
+  	<soap:binding style="document"
+  		transport="http://schemas.xmlsoap.org/soap/http" />
+  	<wsdl:operation name="validarNIF">
+  		<soap:operation
+  			soapAction="http://www.example.org/servicio/validarNIF" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="validarIBAN">
+  		<soap:operation
+  			soapAction="http://www.example.org/servicio/validarIBAN" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="consultaCodigoPostal">
+  		<soap:operation
+  			soapAction="http://www.example.org/servicio/consultaCodigoPostal" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="generarPresupuesto">
+  		<soap:operation
+  			soapAction="http://www.example.org/servicio/generarPresupuesto" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="solicitarPresupuesto">
+  		<soap:operation
+  			soapAction="http://www.example.org/servicio/solicitarPresupuesto" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="servicio">
     <wsdl:port binding="tns:servicioSOAP" name="servicioSOAP">

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/servicio/" name="servicio" targetNamespace="http://www.example.org/servicio/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/servicio/">
+      <xsd:element name="validarNIF">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="nif" type="xsd:string" />
+            <xsd:element name="SoapKey" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validarNIFResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validarIBAN">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="iban" type="xsd:string" />
+            <xsd:element name="SoapKey" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validarIBANResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:boolean" />
+            <xsd:element name="error" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultaCodigoPostal">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="CodigoPostal" type="xsd:string" />
+            <xsd:element name="SoapKey" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultaCodigoPostalResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="codigoPostal" type="xsd:string" />
+            <xsd:element name="poblacion" type="xsd:string" />
+            <xsd:element name="provincia" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="generarPresupuesto">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="fechaPresupuesto" type="xsd:date" />
+            <xsd:element name="idCliente" type="xsd:int" />
+            <xsd:element name="referenciaProducto" type="xsd:string" />
+            <xsd:element name="cantidadProducto" type="xsd:int" />
+            <xsd:element name="SoapKey" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="generarPresupuestoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="idPresupuesto" type="xsd:int" />
+            <xsd:element name="presupuestoGeneradoCorrectamente" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="solicitarPresupuesto">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="referenciaPieza" type="xsd:string" />
+            <xsd:element name="idProveedor" type="xsd:int" />
+            <xsd:element name="SoapKey" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="solicitarPresupuestoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="precioPieza" type="xsd:float" />
+            <xsd:element name="disponibilidadPieza" type="xsd:boolean" />
+            <xsd:element name="fechaDisponibilidadPieza" type="xsd:date" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validarNIFFault">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="validarNIFFault" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="validarIBANRequest">
+    <wsdl:part name="parameters" element="tns:validarIBAN" />
+  </wsdl:message>
+  <wsdl:message name="solicitarPresupuestoResponse">
+    <wsdl:part name="parameters" element="tns:solicitarPresupuestoResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewOperationResponse">
+    <wsdl:part name="parameters" element="tns:NewOperationResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewOperationRequest">
+    <wsdl:part name="parameters" element="tns:NewOperation" />
+  </wsdl:message>
+  <wsdl:message name="validarIBANResponse">
+    <wsdl:part name="parameters" element="tns:validarIBANResponse" />
+  </wsdl:message>
+  <wsdl:message name="generarPresupuestoRequest">
+    <wsdl:part name="parameters" element="tns:generarPresupuesto" />
+  </wsdl:message>
+  <wsdl:message name="validarNIFRequest">
+    <wsdl:part name="parameters" element="tns:validarNIF" />
+  </wsdl:message>
+  <wsdl:message name="consultaCodigoPostalRequest">
+    <wsdl:part name="parameters" element="tns:consultaCodigoPostal" />
+  </wsdl:message>
+  <wsdl:message name="generarPresupuestoResponse">
+    <wsdl:part name="parameters" element="tns:generarPresupuestoResponse" />
+  </wsdl:message>
+  <wsdl:message name="validarNIFFault">
+    <wsdl:part name="parameters" element="tns:validarNIFFault" />
+  </wsdl:message>
+  <wsdl:message name="validarNIFResponse">
+    <wsdl:part name="parameters" element="tns:validarNIFResponse" />
+  </wsdl:message>
+  <wsdl:message name="solicitarPresupuestoRequest">
+    <wsdl:part name="parameters" element="tns:solicitarPresupuesto" />
+  </wsdl:message>
+  <wsdl:message name="consultaCodigoPostalResponse">
+    <wsdl:part name="parameters" element="tns:consultaCodigoPostalResponse" />
+  </wsdl:message>
+  <wsdl:portType name="servicio">
+    <wsdl:operation name="validarNIF">
+      <wsdl:input message="tns:validarNIFRequest" />
+      <wsdl:output message="tns:validarNIFResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="validarIBAN">
+      <wsdl:input message="tns:validarIBANRequest" />
+      <wsdl:output message="tns:validarIBANResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="consultaCodigoPostal">
+      <wsdl:input message="tns:consultaCodigoPostalRequest" />
+      <wsdl:output message="tns:consultaCodigoPostalResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="generarPresupuesto">
+      <wsdl:input message="tns:generarPresupuestoRequest" />
+      <wsdl:output message="tns:generarPresupuestoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="solicitarPresupuesto">
+      <wsdl:input message="tns:solicitarPresupuestoRequest" />
+      <wsdl:output message="tns:solicitarPresupuestoResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="servicioSOAP" type="tns:servicio">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="validarNIF">
+      <soap:operation soapAction="http://www.example.org/servicio/validarNIF" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="validarIBAN">
+      <soap:operation soapAction="http://www.example.org/servicio/validarIBAN" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="consultaCodigoPostal">
+      <soap:operation soapAction="http://www.example.org/servicio/consultaCodigoPostal" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="generarPresupuesto">
+      <soap:operation soapAction="http://www.example.org/servicio/generarPresupuesto" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="solicitarPresupuesto">
+      <soap:operation soapAction="http://www.example.org/servicio/solicitarPresupuesto" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="servicio">
+    <wsdl:port name="servicioSOAP" binding="tns:servicioSOAP">
+      <soap:address location="http://www.example.org/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
