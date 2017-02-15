@@ -31,6 +31,7 @@
             this.textBoxDni = new System.Windows.Forms.TextBox();
             this.buttonDni = new System.Windows.Forms.Button();
             this.labelDni = new System.Windows.Forms.Label();
+            this.labelDniResult = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxDni
@@ -59,11 +60,21 @@
             this.labelDni.TabIndex = 2;
             this.labelDni.Text = "Dni:";
             // 
+            // labelDniResult
+            // 
+            this.labelDniResult.AutoSize = true;
+            this.labelDniResult.Location = new System.Drawing.Point(70, 102);
+            this.labelDniResult.Name = "labelDniResult";
+            this.labelDniResult.Size = new System.Drawing.Size(10, 13);
+            this.labelDniResult.TabIndex = 3;
+            this.labelDniResult.Text = ".";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(507, 354);
+            this.Controls.Add(this.labelDniResult);
             this.Controls.Add(this.labelDni);
             this.Controls.Add(this.buttonDni);
             this.Controls.Add(this.textBoxDni);
@@ -80,6 +91,7 @@
         private System.Windows.Forms.TextBox textBoxDni;
         private System.Windows.Forms.Button buttonDni;
         private System.Windows.Forms.Label labelDni;
+        private System.Windows.Forms.Label labelDniResult;
     }
 }
 

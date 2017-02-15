@@ -13,7 +13,8 @@
       <xsd:element name="validarNIFResponse">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element name="out" type="xsd:boolean"/>
+          	<xsd:element name="out" type="xsd:boolean" />
+          	<xsd:element name="keyValida" type="xsd:boolean"></xsd:element>
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
@@ -32,6 +33,7 @@
 
       			<xsd:element name="out" type="xsd:boolean"></xsd:element>
       			<xsd:element name="error" type="xsd:string"></xsd:element>
+      			<xsd:element name="keyValida" type="xsd:boolean"></xsd:element>
       		</xsd:sequence>
       	</xsd:complexType>
       </xsd:element>
@@ -51,6 +53,7 @@
       			<xsd:element name="codigoPostal" type="xsd:string"></xsd:element>
       			<xsd:element name="poblacion" type="xsd:string"></xsd:element>
       			<xsd:element name="provincia" type="xsd:string"></xsd:element>
+      			<xsd:element name="keyValida" type="xsd:boolean"></xsd:element>
       		</xsd:sequence>
       	</xsd:complexType>
       </xsd:element>
@@ -75,7 +78,10 @@
       		<xsd:sequence>
 
       			<xsd:element name="idPresupuesto" type="xsd:int"></xsd:element>
-      			<xsd:element name="presupuestoGeneradoCorrectamente" type="xsd:boolean"></xsd:element>
+      			<xsd:element name="presupuestoGeneradoCorrectamente"
+      				type="xsd:boolean">
+      			</xsd:element>
+      			<xsd:element name="keyValida" type="xsd:boolean"></xsd:element>
       		</xsd:sequence>
       	</xsd:complexType>
       </xsd:element>
@@ -99,7 +105,10 @@
       			<xsd:element name="disponibilidadPieza"
       				type="xsd:boolean">
       			</xsd:element>
-      			<xsd:element name="fechaDisponibilidadPieza" type="xsd:date"></xsd:element>
+      			<xsd:element name="fechaDisponibilidadPieza"
+      				type="xsd:date">
+      			</xsd:element>
+      			<xsd:element name="keyValida" type="xsd:boolean"></xsd:element>
       		</xsd:sequence>
       	</xsd:complexType>
       </xsd:element>
@@ -193,55 +202,71 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="servicioSOAP" type="tns:servicio">
+
   	<soap:binding style="document"
   		transport="http://schemas.xmlsoap.org/soap/http" />
   	<wsdl:operation name="validarNIF">
+
   		<soap:operation
   			soapAction="http://www.example.org/servicio/validarNIF" />
   		<wsdl:input>
+
   			<soap:body use="literal" />
   		</wsdl:input>
   		<wsdl:output>
+
   			<soap:body use="literal" />
   		</wsdl:output>
   	</wsdl:operation>
   	<wsdl:operation name="validarIBAN">
+
   		<soap:operation
   			soapAction="http://www.example.org/servicio/validarIBAN" />
   		<wsdl:input>
+
   			<soap:body use="literal" />
   		</wsdl:input>
   		<wsdl:output>
+
   			<soap:body use="literal" />
   		</wsdl:output>
   	</wsdl:operation>
   	<wsdl:operation name="consultaCodigoPostal">
+
   		<soap:operation
   			soapAction="http://www.example.org/servicio/consultaCodigoPostal" />
   		<wsdl:input>
+
   			<soap:body use="literal" />
   		</wsdl:input>
   		<wsdl:output>
+
   			<soap:body use="literal" />
   		</wsdl:output>
   	</wsdl:operation>
   	<wsdl:operation name="generarPresupuesto">
+
   		<soap:operation
   			soapAction="http://www.example.org/servicio/generarPresupuesto" />
   		<wsdl:input>
+
   			<soap:body use="literal" />
   		</wsdl:input>
   		<wsdl:output>
+
   			<soap:body use="literal" />
   		</wsdl:output>
   	</wsdl:operation>
   	<wsdl:operation name="solicitarPresupuesto">
+
   		<soap:operation
   			soapAction="http://www.example.org/servicio/solicitarPresupuesto" />
   		<wsdl:input>
+
   			<soap:body use="literal" />
   		</wsdl:input>
   		<wsdl:output>
+
   			<soap:body use="literal" />
   		</wsdl:output>
   	</wsdl:operation>

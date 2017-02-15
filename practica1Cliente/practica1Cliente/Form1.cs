@@ -12,21 +12,22 @@ namespace practica1Cliente
 {
     public partial class Form1 : Form
     {
+        practica1Cliente.localhost.servicio sv;
+
         public Form1()
         {
-            String url="http://localhost:9080/practica1/services/servicio.wsdl";
             InitializeComponent();
-            
+            this.sv = new practica1Cliente.localhost.servicio();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
         private void buttonDni_Click(object sender, EventArgs e)
         {
-             
+            bool a = sv.validarNIF("6553345","dgfsdf");
+            labelDniResult.Text = "";
         }
     }
 }
