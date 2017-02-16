@@ -10,9 +10,16 @@
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.math.BigInteger;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
 /**
      *  ServicioSkeleton java skeleton for the axisService
@@ -27,7 +34,23 @@ import com.mysql.jdbc.PreparedStatement;
        	 	Class.forName("com.mysql.jdbc.Driver");
        	 	con = (Connection)DriverManager.getConnection(url,"root","root");
     	}
-    	 
+    	
+    	private boolean validarLlave(String llave){
+        	try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement("SELECT * FROM llaves")) {
+      		  ResultSet rs = stmt.executeQuery();           		 
+      		  while (rs.next()){
+      			  if(rs.getString("llave").equals(llave)){
+      				  return true;
+      			  }
+      		  }           		    
+      		 
+      		} catch (SQLException sqle) { 
+      		  System.out.println("Error en la ejecución:" 
+      		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+      		}
+        	return false;
+        }
+
         private boolean validarDNI(String dni){
         	 if(dni.length() != 9 || !Character.isLetter(dni.charAt(8)))
      			return false;
@@ -45,6 +68,51 @@ import com.mysql.jdbc.PreparedStatement;
         	 }
         	 return false;
         }
+                
+        private String validarIBAN(String cuenta){
+        	boolean esValido = false;
+    		int i = 2;
+    		int caracterASCII = 0; 
+    		int resto = 0;
+    		int dc = 0;
+    		String cadenaDc = "";
+    		BigInteger cuentaNumero = new BigInteger("0"); 
+    		BigInteger modo = new BigInteger("97");
+    		
+    		if(cuenta.length() != 24)
+    			return "Error: El iban no tiene 24";
+    		else{
+    			if(cuenta.substring(0,1).toUpperCase().equals("E") 
+    			&& cuenta.substring(1,2).toUpperCase().equals("S")) {
+
+	    			do {
+	    				caracterASCII = cuenta.codePointAt(i);
+	    				esValido = (caracterASCII > 47 && caracterASCII < 58);
+	    				i++;
+	    			}
+	    			while(i < cuenta.length() && esValido); 
+	    			    		
+	    			if(esValido) {
+	    				cuentaNumero = new BigInteger(cuenta.substring(4,24) + "142800");
+	    				resto = cuentaNumero.mod(modo).intValue();
+	    				dc = 98 - resto;
+	    				cadenaDc = String.valueOf(dc);
+	    			}	
+	    			
+	    			if(dc < 10) {
+	    				cadenaDc = "0" + cadenaDc;
+	    			} 
+	
+	    			// Comparamos los caracteres 2 y 3 de la cuenta (dígito de control IBAN) con cadenaDc
+	    			if(cuenta.substring(2,4).equals(cadenaDc)) {
+	    				return "Ok";
+	    			} else {
+	    				return "Error: Los caracteres 2 y 3 no son los mismos";
+	    			}
+    			}
+    		}
+    		return "Error";
+       }
         /**
          * Auto generated method signature
          * 
@@ -57,8 +125,29 @@ import com.mysql.jdbc.PreparedStatement;
                   org.example.www.servicio.ConsultaCodigoPostal consultaCodigoPostal
                   )
             {
-                //TODO : fill this with the necessary business logic
-                throw new  java.lang.UnsupportedOperationException("Please implement " + this.getClass().getName() + "#consultaCodigoPostal");
+                	 boolean existe = false;
+                	 ConsultaCodigoPostalResponse resp = new ConsultaCodigoPostalResponse();
+	            	 resp.setKeyValida(validarLlave(consultaCodigoPostal.getSoapKey()));
+                	 String sql = "SELECT * FROM codigospostales WHERE codigo = " + consultaCodigoPostal.getCodigoPostal();
+                	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
+                 		  ResultSet rs = stmt.executeQuery();           		 
+                 		  while (rs.next()){
+                 			  resp.setCodigoPostal(rs.getString("codigo"));
+                 			  resp.setPoblacion(rs.getString("poblacion"));
+                 			  resp.setProvincia(rs.getString("provincia"));
+                 			  existe = true;
+                 		  }           		                    		 
+                 		} catch (SQLException sqle) { 
+                 		  System.out.println("Error en la ejecución:" 
+                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+                 		}    
+                	 if(!existe){
+                		 resp.setCodigoPostal("No encrontrado");
+                		 resp.setPoblacion("No encrontrado");
+                		 resp.setProvincia("No encrontrado");
+                	 }
+	            	 return resp;  
+                
         }
      
          
@@ -75,24 +164,10 @@ import com.mysql.jdbc.PreparedStatement;
                   (
                   org.example.www.servicio.ValidarNIF validarNIF
                   ) throws SQLException, ClassNotFoundException
-            {
-                	 boolean claveCorrecta = false;
-                	               
-	            	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement("SELECT * FROM llaves")) {
-	            		  ResultSet rs = stmt.executeQuery();           		 
-	            		  while (rs.next()){
-	            			  if(rs.getString("llave").equals(validarNIF.getSoapKey())){
-	            				  claveCorrecta = true;
-	            			  }
-	            		  }           		    
-	            		 
-	            		} catch (SQLException sqle) { 
-	            		  System.out.println("Error en la ejecución:" 
-	            		    + sqle.getErrorCode() + " " + sqle.getMessage());    
-	            		}
+            {           	               	            	 
 	            	 ValidarNIFResponse resp = new ValidarNIFResponse();
 	            	 resp.setOut(this.validarDNI(validarNIF.getNif()));
-	            	 resp.setKeyValida(claveCorrecta);
+	            	 resp.setKeyValida(validarLlave(validarNIF.getSoapKey()));
 	            	 return resp;                               
         }
      
@@ -109,8 +184,11 @@ import com.mysql.jdbc.PreparedStatement;
                   org.example.www.servicio.ValidarIBAN validarIBAN
                   )
             {
-                //TODO : fill this with the necessary business logic
-                throw new  java.lang.UnsupportedOperationException("Please implement " + this.getClass().getName() + "#validarIBAN");
+                	 ValidarIBANResponse resp = new ValidarIBANResponse();              	 
+	            	 resp.setOut(this.validarIBAN(validarIBAN.getIban()).substring(1).equals("k"));
+	            	 resp.setError(this.validarIBAN(validarIBAN.getIban()));
+	            	 resp.setKeyValida(validarLlave(validarIBAN.getSoapKey()));
+	            	 return resp; 
         }
      
          
@@ -126,8 +204,54 @@ import com.mysql.jdbc.PreparedStatement;
                   org.example.www.servicio.GenerarPresupuesto generarPresupuesto
                   )
             {
-                //TODO : fill this with the necessary business logic
-                throw new  java.lang.UnsupportedOperationException("Please implement " + this.getClass().getName() + "#generarPresupuesto");
+                	 GenerarPresupuestoResponse resp = new GenerarPresupuestoResponse();
+                	 resp.setKeyValida(validarLlave(generarPresupuesto.getSoapKey()));
+                	 boolean generado = false;
+                	 Date fecha = generarPresupuesto.getFechaPresupuesto();
+                	 java.sql.Date fechaSql = new java.sql.Date(fecha.getTime());
+                	 String sql = "SELECT * FROM producto, presupuesto WHERE producto.referenciaproducto = presupuesto.referenciaproducto "
+                			 + "&& producto.fechadisponibilidad ='" + fechaSql+ "'"
+                			 + "&& producto.referenciaproducto ='" + generarPresupuesto.getReferenciaProducto()+"'";
+                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
+                 		  ResultSet rs = stmt.executeQuery();                   		  
+                 		  while (rs.next()){
+                 			  if(generarPresupuesto.getCantidadProducto() <= rs.getInt("producto.stock")){  
+                 				  generado = true;
+                 			  }
+                 			  else
+                 				 resp.setPresupuestoGeneradoCorrectamente(false);
+                 		  }           		                    		 
+                 		} catch (SQLException sqle) { 
+                 		  System.out.println("Error en la ejecución:" 
+                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+                 		}
+	                 	if(generado){
+		                 	String sqlInsert = "INSERT INTO presupuesto (idcliente,referenciaproducto,cantidadproducto)"
+		                 				  		+ "VALUES ('"+ generarPresupuesto.getIdCliente()+"' , '"+ generarPresupuesto.getReferenciaProducto()
+		                 				  		+"' , '" + generarPresupuesto.getCantidadProducto() + "')";
+		                 	 try  {
+		                 		 Statement stmt = (Statement) con.createStatement();
+		                 		 stmt.executeUpdate(sqlInsert);
+		              		  /*while (rs.next()){
+		              			  resp.setIdPresupuesto(rs.getInt(1));
+		              		  }   */        		                    		 
+		              		} catch (SQLException sqle) { 
+		              		  System.out.println("Error en la ejecución:" 
+		              		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+		              		}
+		                 	String sql2 = "SELECT idpresupuesto from presupuesto ORDER BY idpresupuesto DESC LIMIT 1";
+		                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql2)) {
+		                 		  ResultSet rs = stmt.executeQuery();                   		  
+		                 		  while (rs.next()){
+		                 			  resp.setIdPresupuesto(rs.getInt("idpresupuesto"));
+		                 		  }           		                    		 
+		                 		} catch (SQLException sqle) { 
+		                 		  System.out.println("Error en la ejecución:" 
+		                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+		                 		}
+	                 	 resp.setPresupuestoGeneradoCorrectamente(true);
+                 	}
+                	 return resp;
         }
      
          
@@ -136,15 +260,38 @@ import com.mysql.jdbc.PreparedStatement;
          * 
                                      * @param solicitarPresupuesto 
              * @return solicitarPresupuestoResponse 
+         * @throws ParseException 
          */
         
                  public org.example.www.servicio.SolicitarPresupuestoResponse solicitarPresupuesto
                   (
                   org.example.www.servicio.SolicitarPresupuesto solicitarPresupuesto
-                  )
+                  ) throws ParseException
             {
-                //TODO : fill this with the necessary business logic
-                throw new  java.lang.UnsupportedOperationException("Please implement " + this.getClass().getName() + "#solicitarPresupuesto");
+               
+                	 SolicitarPresupuestoResponse resp = new SolicitarPresupuestoResponse();               	 
+                	 resp.setKeyValida(validarLlave(solicitarPresupuesto.getSoapKey()));
+                	 String sql = "select producto.precioproducto, producto.fechadisponibilidad "
+                	 		+ "from producto, proveedor, presupuesto "
+                	 		+ "where producto.idproveedor = proveedor.idproveedor "
+                	 		+ "&& producto.referenciaproducto = '" + solicitarPresupuesto.getReferenciaPieza()
+                	 		+ "' && proveedor.idproveedor =" + solicitarPresupuesto.getIdProveedor()
+                	 		+ "&& presupuesto.referenciaproducto = '"  + solicitarPresupuesto.getReferenciaPieza()+"'";
+                	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
+                		  ResultSet rs = stmt.executeQuery();           		 
+                		  while (rs.next()){
+                			  resp.setFechaDisponibilidadPieza(rs.getDate("producto.fechadisponibilidad"));
+                			  resp.setPrecioPieza(rs.getFloat("precioproducto"));
+                			  DateFormat format = new SimpleDateFormat("yyy-mm-dd");
+                			  Date cal = new Date();
+                			  resp.setDisponibilidadPieza(!(rs.getDate("producto.fechadisponibilidad").before(cal)));
+
+                		  }           		                    		 
+                		} catch (SQLException sqle) { 
+                		  System.out.println("Error en la ejecución:" 
+                		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+                		}    
+                	 return resp;
         }
      
     }
