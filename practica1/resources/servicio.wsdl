@@ -13,7 +13,8 @@
       <xsd:element name="validarNIFResponse">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element name="out" type="xsd:boolean"/>
+          	<xsd:element name="out" type="xsd:boolean"/>
+          	<xsd:element name="keyValida" type="xsd:boolean"/>
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
@@ -32,6 +33,7 @@
 
       			<xsd:element name="out" type="xsd:boolean"/>
       			<xsd:element name="error" type="xsd:string"/>
+      			<xsd:element name="keyValida" type="xsd:boolean"/>
       		</xsd:sequence>
       	</xsd:complexType>
       </xsd:element>
@@ -51,6 +53,7 @@
       			<xsd:element name="codigoPostal" type="xsd:string"/>
       			<xsd:element name="poblacion" type="xsd:string"/>
       			<xsd:element name="provincia" type="xsd:string"/>
+      			<xsd:element name="keyValida" type="xsd:boolean"/>
       		</xsd:sequence>
       	</xsd:complexType>
       </xsd:element>
@@ -73,7 +76,9 @@
       		<xsd:sequence>
 
       			<xsd:element name="idPresupuesto" type="xsd:int"/>
-      			<xsd:element name="presupuestoGeneradoCorrectamente" type="xsd:boolean"/>
+      			<xsd:element name="presupuestoGeneradoCorrectamente" type="xsd:boolean">
+      			</xsd:element>
+      			<xsd:element name="keyValida" type="xsd:boolean"/>
       		</xsd:sequence>
       	</xsd:complexType>
       </xsd:element>
@@ -95,7 +100,9 @@
       			<xsd:element name="precioPieza" type="xsd:float"/>
       			<xsd:element name="disponibilidadPieza" type="xsd:boolean">
       			</xsd:element>
-      			<xsd:element name="fechaDisponibilidadPieza" type="xsd:date"/>
+      			<xsd:element name="fechaDisponibilidadPieza" type="xsd:date">
+      			</xsd:element>
+      			<xsd:element name="keyValida" type="xsd:boolean"/>
       		</xsd:sequence>
       	</xsd:complexType>
       </xsd:element>
