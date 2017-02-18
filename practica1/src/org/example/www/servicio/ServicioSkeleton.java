@@ -127,27 +127,35 @@ import com.mysql.jdbc.Statement;
             {
                 	 boolean existe = false;
                 	 ConsultaCodigoPostalResponse resp = new ConsultaCodigoPostalResponse();
-	            	 resp.setKeyValida(validarLlave(consultaCodigoPostal.getSoapKey()));
-                	 String sql = "SELECT * FROM codigospostales WHERE codigo = " + consultaCodigoPostal.getCodigoPostal();
-                	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
-                 		  ResultSet rs = stmt.executeQuery();           		 
-                 		  while (rs.next()){
-                 			  resp.setCodigoPostal(rs.getString("codigo"));
-                 			  resp.setPoblacion(rs.getString("poblacion"));
-                 			  resp.setProvincia(rs.getString("provincia"));
-                 			  existe = true;
-                 		  }           		                    		 
-                 		} catch (SQLException sqle) { 
-                 		  System.out.println("Error en la ejecución:" 
-                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
-                 		}    
-                	 if(!existe){
-                		 resp.setCodigoPostal("No encrontrado");
-                		 resp.setPoblacion("No encrontrado");
-                		 resp.setProvincia("No encrontrado");
-                	 }
-	            	 return resp;  
-                
+                	 
+	            	 if (validarLlave(consultaCodigoPostal.getSoapKey())){
+	            		 resp.setKeyValida(true);
+	            		 String sql = "SELECT * FROM codigospostales WHERE codigo = " + consultaCodigoPostal.getCodigoPostal();
+	                	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)){
+	                 		  ResultSet rs = stmt.executeQuery();           		 
+	                 		  while (rs.next()){
+	                 			  resp.setCodigoPostal(rs.getString("codigo"));
+	                 			  resp.setPoblacion(rs.getString("poblacion"));
+	                 			  resp.setProvincia(rs.getString("provincia"));
+	                 			  existe = true;
+	                 		  }           		                    		 
+	                 		} catch (SQLException sqle) { 
+	                 		  System.out.println("Error en la ejecución:" 
+	                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+	                 		}    
+	                	 if(!existe){
+	                		 resp.setCodigoPostal("No encrontrado");
+	                		 resp.setPoblacion("No encrontrado");
+	                		 resp.setProvincia("No encrontrado");
+	                	 }
+	            	 }
+	            	 else{
+	            		 resp.setCodigoPostal("");
+            			 resp.setPoblacion("");
+            			 resp.setProvincia("");
+            			 resp.setKeyValida(false);
+	            	 }
+	            	 return resp;                 
         }
      
          
@@ -166,8 +174,11 @@ import com.mysql.jdbc.Statement;
                   ) throws SQLException, ClassNotFoundException
             {           	               	            	 
 	            	 ValidarNIFResponse resp = new ValidarNIFResponse();
-	            	 resp.setOut(this.validarDNI(validarNIF.getNif()));
-	            	 resp.setKeyValida(validarLlave(validarNIF.getSoapKey()));
+	            	 
+	            	 if (validarLlave(validarNIF.getSoapKey()))
+	            		 resp.setOut(validarDNI(validarNIF.getNif()));
+	            	 else
+	            		 resp.setKeyValida(false);
 	            	 return resp;                               
         }
      
@@ -184,10 +195,16 @@ import com.mysql.jdbc.Statement;
                   org.example.www.servicio.ValidarIBAN validarIBAN
                   )
             {
-                	 ValidarIBANResponse resp = new ValidarIBANResponse();              	 
-	            	 resp.setOut(this.validarIBAN(validarIBAN.getIban()).substring(1).equals("k"));
-	            	 resp.setError(this.validarIBAN(validarIBAN.getIban()));
-	            	 resp.setKeyValida(validarLlave(validarIBAN.getSoapKey()));
+                	 ValidarIBANResponse resp = new ValidarIBANResponse();
+                	 if(validarLlave(validarIBAN.getSoapKey())){
+                		 resp.setOut(this.validarIBAN(validarIBAN.getIban()).substring(1).equals("k"));
+                		 resp.setError(this.validarIBAN(validarIBAN.getIban()));
+                		 resp.setKeyValida(true);
+                	 }
+                	 else{
+                		 resp.setError("La key no es válida");
+                		 resp.setKeyValida(false);
+                	 }
 	            	 return resp; 
         }
      
@@ -205,52 +222,64 @@ import com.mysql.jdbc.Statement;
                   )
             {
                 	 GenerarPresupuestoResponse resp = new GenerarPresupuestoResponse();
-                	 resp.setKeyValida(validarLlave(generarPresupuesto.getSoapKey()));
-                	 boolean generado = false;
-                	 Date fecha = generarPresupuesto.getFechaPresupuesto();
-                	 java.sql.Date fechaSql = new java.sql.Date(fecha.getTime());
-                	 String sql = "SELECT * FROM producto, presupuesto WHERE producto.referenciaproducto = presupuesto.referenciaproducto "
-                			 + "&& producto.fechadisponibilidad ='" + fechaSql+ "'"
-                			 + "&& producto.referenciaproducto ='" + generarPresupuesto.getReferenciaProducto()+"'";
-                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
-                 		  ResultSet rs = stmt.executeQuery();                   		  
-                 		  while (rs.next()){
-                 			  if(generarPresupuesto.getCantidadProducto() <= rs.getInt("producto.stock")){  
-                 				  generado = true;
-                 			  }
-                 			  else
-                 				 resp.setPresupuestoGeneradoCorrectamente(false);
-                 		  }           		                    		 
-                 		} catch (SQLException sqle) { 
-                 		  System.out.println("Error en la ejecución:" 
-                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
-                 		}
-	                 	if(generado){
-		                 	String sqlInsert = "INSERT INTO presupuesto (idcliente,referenciaproducto,cantidadproducto)"
-		                 				  		+ "VALUES ('"+ generarPresupuesto.getIdCliente()+"' , '"+ generarPresupuesto.getReferenciaProducto()
-		                 				  		+"' , '" + generarPresupuesto.getCantidadProducto() + "')";
-		                 	 try  {
-		                 		 Statement stmt = (Statement) con.createStatement();
-		                 		 stmt.executeUpdate(sqlInsert);
-		              		  /*while (rs.next()){
-		              			  resp.setIdPresupuesto(rs.getInt(1));
-		              		  }   */        		                    		 
-		              		} catch (SQLException sqle) { 
-		              		  System.out.println("Error en la ejecución:" 
-		              		    + sqle.getErrorCode() + " " + sqle.getMessage());    
-		              		}
-		                 	String sql2 = "SELECT idpresupuesto from presupuesto ORDER BY idpresupuesto DESC LIMIT 1";
-		                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql2)) {
-		                 		  ResultSet rs = stmt.executeQuery();                   		  
-		                 		  while (rs.next()){
-		                 			  resp.setIdPresupuesto(rs.getInt("idpresupuesto"));
-		                 		  }           		                    		 
-		                 		} catch (SQLException sqle) { 
-		                 		  System.out.println("Error en la ejecución:" 
-		                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
-		                 		}
-	                 	 resp.setPresupuestoGeneradoCorrectamente(true);
-                 	}
+                	 
+                	 if(validarLlave(generarPresupuesto.getSoapKey())){
+                		 resp.setKeyValida(true);
+                		 boolean generado = false;
+                    	 Date fecha = generarPresupuesto.getFechaPresupuesto();
+                    	 java.sql.Date fechaSql = new java.sql.Date(fecha.getTime());
+                    	 String sql = "SELECT * FROM producto, presupuesto WHERE producto.referenciaproducto = presupuesto.referenciaproducto "
+                    			 + "&& producto.fechadisponibilidad ='" + fechaSql+ "'"
+                    			 + "&& producto.referenciaproducto ='" + generarPresupuesto.getReferenciaProducto()+"'";
+                     	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
+                     		  ResultSet rs = stmt.executeQuery();                   		  
+                     		  while (rs.next()){
+                     			  if(generarPresupuesto.getCantidadProducto() <= rs.getInt("producto.stock")){  
+                     				  generado = true;
+                     			  }
+                     			  else
+                     				 resp.setPresupuestoGeneradoCorrectamente(false);
+                     		  }           		                    		 
+                     		} catch (SQLException sqle) { 
+                     		  System.out.println("Error en la ejecución:" 
+                     		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+                     		}
+    	                 	if(generado){
+    		                 	String sqlInsert = "INSERT INTO presupuesto (idcliente,referenciaproducto,cantidadproducto)"
+    		                 				  		+ "VALUES ('"+ generarPresupuesto.getIdCliente()+"' , '"+ generarPresupuesto.getReferenciaProducto()
+    		                 				  		+"' , '" + generarPresupuesto.getCantidadProducto() + "')";
+    		                 	 try  {
+    		                 		 Statement stmt = (Statement) con.createStatement();
+    		                 		 stmt.executeUpdate(sqlInsert);
+    		              		  /*while (rs.next()){
+    		              			  resp.setIdPresupuesto(rs.getInt(1));
+    		              		  }   */        		                    		 
+    		              		} catch (SQLException sqle) { 
+    		              		  System.out.println("Error en la ejecución:" 
+    		              		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+    		              		}
+    		                 	String sql2 = "SELECT idpresupuesto from presupuesto ORDER BY idpresupuesto DESC LIMIT 1";
+    		                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql2)) {
+    		                 		  ResultSet rs = stmt.executeQuery();                   		  
+    		                 		  while (rs.next()){
+    		                 			  resp.setIdPresupuesto(rs.getInt("idpresupuesto"));
+    		                 		  }           		                    		 
+    		                 		} catch (SQLException sqle) { 
+    		                 		  System.out.println("Error en la ejecución:" 
+    		                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+    		                 		}
+    	                 	 resp.setPresupuestoGeneradoCorrectamente(true);
+                     	}
+    	                 	else{
+    	                 		resp.setIdPresupuesto(-1);
+    	                		resp.setPresupuestoGeneradoCorrectamente(false);
+    	                 	}
+                	 }
+                	 else{
+                		 resp.setKeyValida(false);
+                		 resp.setIdPresupuesto(-1);
+                		 resp.setPresupuestoGeneradoCorrectamente(false);                		 
+                	 }               	 
                 	 return resp;
         }
      
@@ -267,30 +296,43 @@ import com.mysql.jdbc.Statement;
                   (
                   org.example.www.servicio.SolicitarPresupuesto solicitarPresupuesto
                   ) throws ParseException
-            {
-               
-                	 SolicitarPresupuestoResponse resp = new SolicitarPresupuestoResponse();               	 
-                	 resp.setKeyValida(validarLlave(solicitarPresupuesto.getSoapKey()));
-                	 String sql = "select producto.precioproducto, producto.fechadisponibilidad "
-                	 		+ "from producto, proveedor, presupuesto "
-                	 		+ "where producto.idproveedor = proveedor.idproveedor "
-                	 		+ "&& producto.referenciaproducto = '" + solicitarPresupuesto.getReferenciaPieza()
-                	 		+ "' && proveedor.idproveedor =" + solicitarPresupuesto.getIdProveedor()
-                	 		+ "&& presupuesto.referenciaproducto = '"  + solicitarPresupuesto.getReferenciaPieza()+"'";
-                	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
-                		  ResultSet rs = stmt.executeQuery();           		 
-                		  while (rs.next()){
-                			  resp.setFechaDisponibilidadPieza(rs.getDate("producto.fechadisponibilidad"));
-                			  resp.setPrecioPieza(rs.getFloat("precioproducto"));
-                			  DateFormat format = new SimpleDateFormat("yyy-mm-dd");
-                			  Date cal = new Date();
-                			  resp.setDisponibilidadPieza(!(rs.getDate("producto.fechadisponibilidad").before(cal)));
-
-                		  }           		                    		 
-                		} catch (SQLException sqle) { 
-                		  System.out.println("Error en la ejecución:" 
-                		    + sqle.getErrorCode() + " " + sqle.getMessage());    
-                		}    
+            {              
+                	 SolicitarPresupuestoResponse resp = new SolicitarPresupuestoResponse();             	 
+                	 if(validarLlave(solicitarPresupuesto.getSoapKey())){
+                		 boolean existe=false;
+                		 resp.setKeyValida(true);
+                    	 String sql = "select producto.precioproducto, producto.fechadisponibilidad "
+                    	 		+ "from producto, proveedor, presupuesto "
+                    	 		+ "where producto.idproveedor = proveedor.idproveedor "
+                    	 		+ "&& producto.referenciaproducto = '" + solicitarPresupuesto.getReferenciaPieza()
+                    	 		+ "' && proveedor.idproveedor =" + solicitarPresupuesto.getIdProveedor()
+                    	 		+ "&& presupuesto.referenciaproducto = '"  + solicitarPresupuesto.getReferenciaPieza()+"'";
+                    	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
+                    		  ResultSet rs = stmt.executeQuery();           		 
+                    		  while (rs.next()){
+                    			  existe = true;
+                    			  resp.setFechaDisponibilidadPieza(rs.getDate("producto.fechadisponibilidad"));
+                    			  resp.setPrecioPieza(rs.getFloat("precioproducto"));
+                    			  DateFormat format = new SimpleDateFormat("yyy-mm-dd");
+                    			  Date cal = new Date();
+                    			  resp.setDisponibilidadPieza(!(rs.getDate("producto.fechadisponibilidad").before(cal)));
+                    		  }
+                    		  if(!existe){
+        						resp.setFechaDisponibilidadPieza(new java.sql.Date(0,0,0));
+        						resp.setPrecioPieza(0);
+        						resp.setDisponibilidadPieza(false);
+                    		  }
+                    		} catch (SQLException sqle) { 
+                    		  System.out.println("Error en la ejecución:" 
+                    		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+                    		}
+                	 }
+					 else{
+						resp.setKeyValida(false);
+						resp.setFechaDisponibilidadPieza(new java.sql.Date(0,0,0));
+						resp.setPrecioPieza(0);
+						resp.setDisponibilidadPieza(false);
+                	 }
                 	 return resp;
         }
      
