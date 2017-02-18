@@ -50,7 +50,17 @@ import com.mysql.jdbc.Statement;
       		}
         	return false;
         }
-
+    	private boolean clienteExiste(int id){
+    		try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement("SELECT * FROM cliente WHERE idcliente = "+ Integer.toString(id))) {
+        		  ResultSet rs = stmt.executeQuery();           		 
+        		  while (rs.next())
+        			  return true;
+        		} catch (SQLException sqle) { 
+        		  System.out.println("Error en la ejecución:" 
+        		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+        		}
+          	return false;
+    	}
         private boolean validarDNI(String dni){
         	 if(dni.length() != 9 || !Character.isLetter(dni.charAt(8)))
      			return false;
@@ -223,19 +233,18 @@ import com.mysql.jdbc.Statement;
             {
                 	 GenerarPresupuestoResponse resp = new GenerarPresupuestoResponse();
                 	 
-                	 if(validarLlave(generarPresupuesto.getSoapKey())){
+                	 if(validarLlave(generarPresupuesto.getSoapKey()) && clienteExiste(generarPresupuesto.getIdCliente())){
                 		 resp.setKeyValida(true);
-                		 boolean generado = false;
+                		 boolean insertar = false;
                     	 Date fecha = generarPresupuesto.getFechaPresupuesto();
                     	 java.sql.Date fechaSql = new java.sql.Date(fecha.getTime());
-                    	 String sql = "SELECT * FROM producto, presupuesto WHERE producto.referenciaproducto = presupuesto.referenciaproducto "
-                    			 + "&& producto.fechadisponibilidad ='" + fechaSql+ "'"
+                    	 String sql = "SELECT * FROM producto, presupuesto, cliente WHERE producto.referenciaproducto = presupuesto.referenciaproducto "
                     			 + "&& producto.referenciaproducto ='" + generarPresupuesto.getReferenciaProducto()+"'";
                      	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
                      		  ResultSet rs = stmt.executeQuery();                   		  
                      		  while (rs.next()){
                      			  if(generarPresupuesto.getCantidadProducto() <= rs.getInt("producto.stock")){  
-                     				  generado = true;
+                     				  insertar = true;
                      			  }
                      			  else
                      				 resp.setPresupuestoGeneradoCorrectamente(false);
@@ -244,16 +253,17 @@ import com.mysql.jdbc.Statement;
                      		  System.out.println("Error en la ejecución:" 
                      		    + sqle.getErrorCode() + " " + sqle.getMessage());    
                      		}
-    	                 	if(generado){
-    		                 	String sqlInsert = "INSERT INTO presupuesto (idcliente,referenciaproducto,cantidadproducto)"
+    	                 	if(insertar){
+    	                 		java.sql.Date fechaPresupuesto = new java.sql.Date(
+    	                 				generarPresupuesto.getFechaPresupuesto().getYear(), 
+    	                 				generarPresupuesto.getFechaPresupuesto().getMonth(),
+    	                 				generarPresupuesto.getFechaPresupuesto().getDay());
+    		                 	String sqlInsert = "INSERT INTO presupuesto (idcliente,referenciaproducto,cantidadproducto,fechadisponibilidad)"
     		                 				  		+ "VALUES ('"+ generarPresupuesto.getIdCliente()+"' , '"+ generarPresupuesto.getReferenciaProducto()
-    		                 				  		+"' , '" + generarPresupuesto.getCantidadProducto() + "')";
+    		                 				  		+"' , '" + generarPresupuesto.getCantidadProducto() +"' , '" + fechaPresupuesto + "')";
     		                 	 try  {
     		                 		 Statement stmt = (Statement) con.createStatement();
-    		                 		 stmt.executeUpdate(sqlInsert);
-    		              		  /*while (rs.next()){
-    		              			  resp.setIdPresupuesto(rs.getInt(1));
-    		              		  }   */        		                    		 
+    		                 		 stmt.executeUpdate(sqlInsert);  		                    		 
     		              		} catch (SQLException sqle) { 
     		              		  System.out.println("Error en la ejecución:" 
     		              		    + sqle.getErrorCode() + " " + sqle.getMessage());    
@@ -268,12 +278,12 @@ import com.mysql.jdbc.Statement;
     		                 		  System.out.println("Error en la ejecución:" 
     		                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
     		                 		}
-    	                 	 resp.setPresupuestoGeneradoCorrectamente(true);
-                     	}
-    	                 	else{
-    	                 		resp.setIdPresupuesto(-1);
-    	                		resp.setPresupuestoGeneradoCorrectamente(false);
-    	                 	}
+    		                 	 resp.setPresupuestoGeneradoCorrectamente(true);
+	                     	}
+		                 	else{
+		                 		resp.setIdPresupuesto(-1);
+		                		resp.setPresupuestoGeneradoCorrectamente(false);
+		                 	}
                 	 }
                 	 else{
                 		 resp.setKeyValida(false);
