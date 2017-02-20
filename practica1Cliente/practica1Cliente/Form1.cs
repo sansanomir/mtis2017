@@ -29,6 +29,12 @@ namespace practica1Cliente
             labelDisp.Text = "";
             labelFechaMostrar.Text = "";
             labelPrecioEuros.Text = "";
+
+            labelIdPresupuesto.Text = "";
+            textBoxIdCli.Text = "";
+            textBoxCantidad.Text = "";
+            textBoxRefProdGen.Text = "";
+            labelErrorGen.Text = "";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -80,6 +86,46 @@ namespace practica1Cliente
                 label3.Text = "";
             }
         }
+
+        private void buttonGenerar_Click(object sender, EventArgs e)
+        {
+            bool generado = false;
+            int idCliente = -1, cantidad = -1;
+
+            DateTime fechaPresupuesto = new DateTime(dateTimePicker1.Value.Date.Year,
+                dateTimePicker1.Value.Date.Month, dateTimePicker1.Value.Date.Day);
+            if (textBoxIdCli.Text == "" || textBoxRefProdGen.Text == "" || textBoxCantidad.Text == "")
+            {
+                labelIdPresupuesto.Text = "Campos vacíos";
+            }
+            try{
+                idCliente = Convert.ToInt32(textBoxIdCli.Text);
+                cantidad = Convert.ToInt32(textBoxCantidad.Text);
+            }
+            catch (OverflowException)
+            {
+                labelErrorGen.Text="Número muy grande";
+            }
+            catch (FormatException)
+            {
+                labelErrorGen.Text="La cantidad y el código tienen que ser enteros";
+            }
+            int resultado = sv.generarPresupuesto(fechaPresupuesto,idCliente ,
+                textBoxRefProdGen.Text,cantidad, textBoxLlave.Text, out generado);
+            if (generado)
+            {
+                labelIdPresupuesto.Text = "Presupuesto: " +Convert.ToString(resultado);
+                textBoxIdCli.Text = "";
+                textBoxCantidad.Text = "";
+                textBoxRefProdGen.Text = "";
+                labelErrorGen.Text = "Generado correctamente";
+            }
+            else if (resultado == -1)
+            {
+                labelErrorGen.Text = "Error al generar";
+            }
+            
+        }   
 
         private void buttonSolPres_Click(object sender, EventArgs e)
         {
@@ -153,6 +199,6 @@ namespace practica1Cliente
         private void label5_Click(object sender, EventArgs e)
         {
 
-        }    
+        } 
     }
 }

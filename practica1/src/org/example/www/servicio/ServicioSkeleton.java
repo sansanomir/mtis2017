@@ -48,7 +48,7 @@ import com.mysql.jdbc.Statement;
       		  System.out.println("Error en la ejecución:" 
       		    + sqle.getErrorCode() + " " + sqle.getMessage());    
       		}
-        	return false;
+        	return false; 
         }
     	private boolean clienteExiste(int id){
     		try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement("SELECT * FROM cliente WHERE idcliente = "+ Integer.toString(id))) {
@@ -87,38 +87,31 @@ import com.mysql.jdbc.Statement;
     		int dc = 0;
     		String cadenaDc = "";
     		BigInteger cuentaNumero = new BigInteger("0"); 
-    		BigInteger modo = new BigInteger("97");
-    		
+    		BigInteger modo = new BigInteger("97");		
     		if(cuenta.length() != 24)
     			return "Error: El iban no tiene 24";
     		else{
     			if(cuenta.substring(0,1).toUpperCase().equals("E") 
     			&& cuenta.substring(1,2).toUpperCase().equals("S")) {
-
 	    			do {
 	    				caracterASCII = cuenta.codePointAt(i);
 	    				esValido = (caracterASCII > 47 && caracterASCII < 58);
 	    				i++;
 	    			}
-	    			while(i < cuenta.length() && esValido); 
-	    			    		
+	    			while(i < cuenta.length() && esValido);     			    		
 	    			if(esValido) {
 	    				cuentaNumero = new BigInteger(cuenta.substring(4,24) + "142800");
 	    				resto = cuentaNumero.mod(modo).intValue();
 	    				dc = 98 - resto;
 	    				cadenaDc = String.valueOf(dc);
-	    			}	
-	    			
-	    			if(dc < 10) {
+	    			}		    			
+	    			if(dc < 10)
 	    				cadenaDc = "0" + cadenaDc;
-	    			} 
-	
 	    			// Comparamos los caracteres 2 y 3 de la cuenta (dígito de control IBAN) con cadenaDc
-	    			if(cuenta.substring(2,4).equals(cadenaDc)) {
+	    			if(cuenta.substring(2,4).equals(cadenaDc))
 	    				return "Ok";
-	    			} else {
+	    			else
 	    				return "Error: Los caracteres 2 y 3 no son los mismos";
-	    			}
     			}
     		}
     		return "Error";
@@ -185,8 +178,11 @@ import com.mysql.jdbc.Statement;
             {           	               	            	 
 	            	 ValidarNIFResponse resp = new ValidarNIFResponse();
 	            	 
-	            	 if (validarLlave(validarNIF.getSoapKey()))
+	            	 if (validarLlave(validarNIF.getSoapKey())){
+	            		 resp.setKeyValida(true);
 	            		 resp.setOut(validarDNI(validarNIF.getNif()));
+	            	 }
+	            		 
 	            	 else
 	            		 resp.setKeyValida(false);
 	            	 return resp;                               

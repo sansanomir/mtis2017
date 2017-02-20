@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="973e9dbc-5039-45b1-8305-04b2dd7319af" activeEnvironment="Default" name="Project 1" resourceRoot="" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="146c99db-c957-4534-bcd9-50916dc065f2" wsaVersion="NONE" name="servicioSOAP" type="wsdl" bindingName="{http://www.example.org/servicio/}servicioSOAP" soapVersion="1_1" anonymous="optional" definition="http://localhost:9080/practica1/services/servicio?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:9080/practica1/services/servicio?wsdl"><con:part><con:url>http://localhost:9080/practica1/services/servicio?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="servicio" targetNamespace="http://www.example.org/servicio/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.example.org/servicio/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/servicio/">
+      <xsd:element name="validarNIF">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="nif" type="xsd:string"/>
+            <xsd:element name="SoapKey" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validarNIFResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:boolean"/>
+            <xsd:element name="keyValida" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validarIBAN">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="iban" type="xsd:string"/>
+            <xsd:element name="SoapKey" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validarIBANResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:boolean"/>
+            <xsd:element name="error" type="xsd:string"/>
+            <xsd:element name="keyValida" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultaCodigoPostal">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="CodigoPostal" type="xsd:string"/>
+            <xsd:element name="SoapKey" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultaCodigoPostalResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="codigoPostal" type="xsd:string"/>
+            <xsd:element name="poblacion" type="xsd:string"/>
+            <xsd:element name="provincia" type="xsd:string"/>
+            <xsd:element name="keyValida" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="generarPresupuesto">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="fechaPresupuesto" type="xsd:date"></xsd:element>
+            <xsd:element name="idCliente" type="xsd:int"/>
+            <xsd:element name="referenciaProducto" type="xsd:string"></xsd:element>
+            <xsd:element name="cantidadProducto" type="xsd:int"/>
+            <xsd:element name="SoapKey" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="generarPresupuestoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="idPresupuesto" type="xsd:int"/>
+            <xsd:element name="presupuestoGeneradoCorrectamente" type="xsd:boolean"></xsd:element>
+            <xsd:element name="keyValida" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="solicitarPresupuesto">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="referenciaPieza" type="xsd:string"></xsd:element>
+            <xsd:element name="idProveedor" type="xsd:int"/>
+            <xsd:element name="SoapKey" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="solicitarPresupuestoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="precioPieza" type="xsd:float"/>
+            <xsd:element name="disponibilidadPieza" type="xsd:boolean"></xsd:element>
+            <xsd:element name="fechaDisponibilidadPieza" type="xsd:date"></xsd:element>
+            <xsd:element name="keyValida" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validarNIFFault">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="validarNIFFault" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="validarIBANRequest">
+    <wsdl:part name="parameters" element="tns:validarIBAN"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="solicitarPresupuestoResponse">
+    <wsdl:part name="parameters" element="tns:solicitarPresupuestoResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NewOperationResponse">
+    <wsdl:part name="parameters" element="tns:NewOperationResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NewOperationRequest">
+    <wsdl:part name="parameters" element="tns:NewOperation"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validarIBANResponse">
+    <wsdl:part name="parameters" element="tns:validarIBANResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generarPresupuestoRequest">
+    <wsdl:part name="parameters" element="tns:generarPresupuesto"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validarNIFRequest">
+    <wsdl:part name="parameters" element="tns:validarNIF"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="consultaCodigoPostalRequest">
+    <wsdl:part name="parameters" element="tns:consultaCodigoPostal"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generarPresupuestoResponse">
+    <wsdl:part name="parameters" element="tns:generarPresupuestoResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validarNIFFault">
+    <wsdl:part name="parameters" element="tns:validarNIFFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validarNIFResponse">
+    <wsdl:part name="parameters" element="tns:validarNIFResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="solicitarPresupuestoRequest">
+    <wsdl:part name="parameters" element="tns:solicitarPresupuesto"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="consultaCodigoPostalResponse">
+    <wsdl:part name="parameters" element="tns:consultaCodigoPostalResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="servicio">
+    <wsdl:operation name="validarNIF">
+      <wsdl:input message="tns:validarNIFRequest"></wsdl:input>
+      <wsdl:output message="tns:validarNIFResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="validarIBAN">
+      <wsdl:input message="tns:validarIBANRequest"></wsdl:input>
+      <wsdl:output message="tns:validarIBANResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="consultaCodigoPostal">
+      <wsdl:input message="tns:consultaCodigoPostalRequest"></wsdl:input>
+      <wsdl:output message="tns:consultaCodigoPostalResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="generarPresupuesto">
+      <wsdl:input message="tns:generarPresupuestoRequest"></wsdl:input>
+      <wsdl:output message="tns:generarPresupuestoResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="solicitarPresupuesto">
+      <wsdl:input message="tns:solicitarPresupuestoRequest"></wsdl:input>
+      <wsdl:output message="tns:solicitarPresupuestoResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="servicioSOAP" type="tns:servicio">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="validarNIF">
+      <soap:operation soapAction="http://www.example.org/servicio/validarNIF"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="validarIBAN">
+      <soap:operation soapAction="http://www.example.org/servicio/validarIBAN"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="consultaCodigoPostal">
+      <soap:operation soapAction="http://www.example.org/servicio/consultaCodigoPostal"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="generarPresupuesto">
+      <soap:operation soapAction="http://www.example.org/servicio/generarPresupuesto"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="solicitarPresupuesto">
+      <soap:operation soapAction="http://www.example.org/servicio/solicitarPresupuesto"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="servicio">
+    <wsdl:port name="servicioSOAP" binding="tns:servicioSOAP">
+      <soap:address location="http://localhost:9080/practica1/services/servicio/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:9080/practica1/services/servicio/</con:endpoint></con:endpoints><con:operation id="afc54c15-b298-4f5a-bfa3-b725a8ba9da6" isOneWay="false" action="http://www.example.org/servicio/consultaCodigoPostal" name="consultaCodigoPostal" bindingOperationName="consultaCodigoPostal" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="10301e5b-e789-4711-a6e2-90db1e017a1b" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9080/practica1/services/servicio/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://www.example.org/servicio/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:consultaCodigoPostal>\r
+         <CodigoPostal>03103</CodigoPostal>\r
+         <SoapKey>asdf</SoapKey>\r
+      </ser:consultaCodigoPostal>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/servicio/consultaCodigoPostal"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="6ebbcf19-8510-4ea9-8f50-7305f921e940" isOneWay="false" action="http://www.example.org/servicio/generarPresupuesto" name="generarPresupuesto" bindingOperationName="generarPresupuesto" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d92d59d1-83b0-4b66-ad51-1ac183c4c624" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9080/practica1/services/servicio/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://www.example.org/servicio/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:generarPresupuesto>\r
+         <fechaPresupuesto>2017-06-05</fechaPresupuesto>\r
+         <idCliente>1</idCliente>\r
+         <referenciaProducto>abcdf</referenciaProducto>\r
+         <cantidadProducto>1000</cantidadProducto>\r
+         <SoapKey>asdf</SoapKey>\r
+      </ser:generarPresupuesto>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/servicio/generarPresupuesto"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="e6d42c92-5fb3-4b62-aa7a-260cc8a02f9b" isOneWay="false" action="http://www.example.org/servicio/solicitarPresupuesto" name="solicitarPresupuesto" bindingOperationName="solicitarPresupuesto" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1a758eff-6aea-4e30-a77b-30742e8f3ec8" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9080/practica1/services/servicio/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://www.example.org/servicio/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:solicitarPresupuesto>\r
+         <referenciaPieza>abcdf</referenciaPieza>\r
+         <idProveedor>1</idProveedor>\r
+         <SoapKey>asdf</SoapKey>\r
+      </ser:solicitarPresupuesto>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/servicio/solicitarPresupuesto"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="c744666c-f190-4415-97ec-c88a25395565" isOneWay="false" action="http://www.example.org/servicio/validarIBAN" name="validarIBAN" bindingOperationName="validarIBAN" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="77685c2e-c94d-45a5-9a70-81f1e73df4b7" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9080/practica1/services/servicio/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://www.example.org/servicio/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:validarIBAN>\r
+         <iban>ES7620770024003102575766</iban>\r
+         <SoapKey>asdf</SoapKey>\r
+      </ser:validarIBAN>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/servicio/validarIBAN"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="d81e47b2-e53d-4f56-8a44-956da7458a82" isOneWay="false" action="http://www.example.org/servicio/validarNIF" name="validarNIF" bindingOperationName="validarNIF" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6160340e-7411-44b7-8ad1-ad1355de46a8" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9080/practica1/services/servicio/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://www.example.org/servicio/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:validarNIF>\r
+         <nif>74372027D</nif>\r
+         <SoapKey>asdf</SoapKey>\r
+      </ser:validarNIF>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.example.org/servicio/validarNIF"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

@@ -62,9 +62,12 @@
             this.labelRefProd = new System.Windows.Forms.Label();
             this.labelCantProd = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxCantidad = new System.Windows.Forms.TextBox();
             this.labelPrecioEuros = new System.Windows.Forms.Label();
             this.labelFechaMostrar = new System.Windows.Forms.Label();
+            this.buttonGenerar = new System.Windows.Forms.Button();
+            this.labelIdPresupuesto = new System.Windows.Forms.Label();
+            this.labelErrorGen = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxDni
@@ -366,12 +369,12 @@
             this.label8.TabIndex = 33;
             this.label8.Text = "Producto:";
             // 
-            // textBox1
+            // textBoxCantidad
             // 
-            this.textBox1.Location = new System.Drawing.Point(735, 229);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(37, 20);
-            this.textBox1.TabIndex = 34;
+            this.textBoxCantidad.Location = new System.Drawing.Point(735, 229);
+            this.textBoxCantidad.Name = "textBoxCantidad";
+            this.textBoxCantidad.Size = new System.Drawing.Size(37, 20);
+            this.textBoxCantidad.TabIndex = 34;
             // 
             // labelPrecioEuros
             // 
@@ -391,14 +394,45 @@
             this.labelFechaMostrar.TabIndex = 36;
             this.labelFechaMostrar.Text = "Fecha disponibilidad:";
             // 
+            // buttonGenerar
+            // 
+            this.buttonGenerar.Location = new System.Drawing.Point(621, 264);
+            this.buttonGenerar.Name = "buttonGenerar";
+            this.buttonGenerar.Size = new System.Drawing.Size(75, 23);
+            this.buttonGenerar.TabIndex = 37;
+            this.buttonGenerar.Text = "Generar";
+            this.buttonGenerar.UseVisualStyleBackColor = true;
+            this.buttonGenerar.Click += new System.EventHandler(this.buttonGenerar_Click);
+            // 
+            // labelIdPresupuesto
+            // 
+            this.labelIdPresupuesto.AutoSize = true;
+            this.labelIdPresupuesto.Location = new System.Drawing.Point(618, 306);
+            this.labelIdPresupuesto.Name = "labelIdPresupuesto";
+            this.labelIdPresupuesto.Size = new System.Drawing.Size(80, 13);
+            this.labelIdPresupuesto.TabIndex = 38;
+            this.labelIdPresupuesto.Text = "Id presupuesto:";
+            // 
+            // labelErrorGen
+            // 
+            this.labelErrorGen.AutoSize = true;
+            this.labelErrorGen.Location = new System.Drawing.Point(621, 342);
+            this.labelErrorGen.Name = "labelErrorGen";
+            this.labelErrorGen.Size = new System.Drawing.Size(35, 13);
+            this.labelErrorGen.TabIndex = 39;
+            this.labelErrorGen.Text = "label9";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(834, 505);
+            this.Controls.Add(this.labelErrorGen);
+            this.Controls.Add(this.labelIdPresupuesto);
+            this.Controls.Add(this.buttonGenerar);
             this.Controls.Add(this.labelFechaMostrar);
             this.Controls.Add(this.labelPrecioEuros);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxCantidad);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.labelCantProd);
             this.Controls.Add(this.labelRefProd);
@@ -477,9 +511,12 @@
         private System.Windows.Forms.Label labelRefProd;
         private System.Windows.Forms.Label labelCantProd;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxCantidad;
         private System.Windows.Forms.Label labelPrecioEuros;
         private System.Windows.Forms.Label labelFechaMostrar;
+        private System.Windows.Forms.Button buttonGenerar;
+        private System.Windows.Forms.Label labelIdPresupuesto;
+        private System.Windows.Forms.Label labelErrorGen;
     }
 }
 
