@@ -6,6 +6,10 @@
         <parameter name="ServiceClass">org.example.www.servicioalmacen.ServicioAlmacenSkeleton</parameter>
         <parameter name="useOriginalwsdl">true</parameter>
         <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="actualizarStock" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/ServicioAlmacen/">
+            <actionMapping>http://www.example.org/ServicioAlmacen/actualizarStock</actionMapping>
+            <outputActionMapping>http://www.example.org/ServicioAlmacen/ServicioAlmacen/actualizarStockResponse</outputActionMapping>
+        </operation>
         <operation name="comprobarStock" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.example.org/ServicioAlmacen/">
             <actionMapping>http://www.example.org/ServicioAlmacen/comprobarStock</actionMapping>
             <outputActionMapping>http://www.example.org/ServicioAlmacen/ServicioAlmacen/comprobarStockResponse</outputActionMapping>

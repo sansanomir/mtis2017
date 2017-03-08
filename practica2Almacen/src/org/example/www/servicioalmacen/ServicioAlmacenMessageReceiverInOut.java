@@ -37,22 +37,41 @@
 
         
 
+            if("actualizarStock".equals(methodName)){
+                
+                org.example.www.servicioalmacen.ActualizarStockResponse actualizarStockResponse9 = null;
+	                        org.example.www.servicioalmacen.ActualizarStock wrappedParam =
+                                                             (org.example.www.servicioalmacen.ActualizarStock)fromOM(
+                                    msgContext.getEnvelope().getBody().getFirstElement(),
+                                    org.example.www.servicioalmacen.ActualizarStock.class,
+                                    getEnvelopeNamespaces(msgContext.getEnvelope()));
+                                                
+                                               actualizarStockResponse9 =
+                                                   
+                                                   
+                                                         skel.actualizarStock(wrappedParam)
+                                                    ;
+                                            
+                                        envelope = toEnvelope(getSOAPFactory(msgContext), actualizarStockResponse9, false, new javax.xml.namespace.QName("http://www.example.org/ServicioAlmacen/",
+                                                    "actualizarStock"));
+                                    } else 
+
             if("comprobarStock".equals(methodName)){
                 
-                org.example.www.servicioalmacen.ComprobarStockResponse comprobarStockResponse5 = null;
+                org.example.www.servicioalmacen.ComprobarStockResponse comprobarStockResponse11 = null;
 	                        org.example.www.servicioalmacen.ComprobarStock wrappedParam =
                                                              (org.example.www.servicioalmacen.ComprobarStock)fromOM(
                                     msgContext.getEnvelope().getBody().getFirstElement(),
                                     org.example.www.servicioalmacen.ComprobarStock.class,
                                     getEnvelopeNamespaces(msgContext.getEnvelope()));
                                                 
-                                               comprobarStockResponse5 =
+                                               comprobarStockResponse11 =
                                                    
                                                    
                                                          skel.comprobarStock(wrappedParam)
                                                     ;
                                             
-                                        envelope = toEnvelope(getSOAPFactory(msgContext), comprobarStockResponse5, false, new javax.xml.namespace.QName("http://www.example.org/ServicioAlmacen/",
+                                        envelope = toEnvelope(getSOAPFactory(msgContext), comprobarStockResponse11, false, new javax.xml.namespace.QName("http://www.example.org/ServicioAlmacen/",
                                                     "comprobarStock"));
                                     
             } else {
@@ -69,6 +88,34 @@
         }
         
         //
+            private  org.apache.axiom.om.OMElement  toOM(org.example.www.servicioalmacen.ActualizarStock param, boolean optimizeContent)
+            throws org.apache.axis2.AxisFault {
+
+            
+                        try{
+                             return param.getOMElement(org.example.www.servicioalmacen.ActualizarStock.MY_QNAME,
+                                          org.apache.axiom.om.OMAbstractFactory.getOMFactory());
+                        } catch(org.apache.axis2.databinding.ADBException e){
+                            throw org.apache.axis2.AxisFault.makeFault(e);
+                        }
+                    
+
+            }
+        
+            private  org.apache.axiom.om.OMElement  toOM(org.example.www.servicioalmacen.ActualizarStockResponse param, boolean optimizeContent)
+            throws org.apache.axis2.AxisFault {
+
+            
+                        try{
+                             return param.getOMElement(org.example.www.servicioalmacen.ActualizarStockResponse.MY_QNAME,
+                                          org.apache.axiom.om.OMAbstractFactory.getOMFactory());
+                        } catch(org.apache.axis2.databinding.ADBException e){
+                            throw org.apache.axis2.AxisFault.makeFault(e);
+                        }
+                    
+
+            }
+        
             private  org.apache.axiom.om.OMElement  toOM(org.example.www.servicioalmacen.ComprobarStock param, boolean optimizeContent)
             throws org.apache.axis2.AxisFault {
 
@@ -97,6 +144,25 @@
 
             }
         
+                    private  org.apache.axiom.soap.SOAPEnvelope toEnvelope(org.apache.axiom.soap.SOAPFactory factory, org.example.www.servicioalmacen.ActualizarStockResponse param, boolean optimizeContent, javax.xml.namespace.QName methodQName)
+                        throws org.apache.axis2.AxisFault{
+                      try{
+                          org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
+                           
+                                    emptyEnvelope.getBody().addChild(param.getOMElement(org.example.www.servicioalmacen.ActualizarStockResponse.MY_QNAME,factory));
+                                
+
+                         return emptyEnvelope;
+                    } catch(org.apache.axis2.databinding.ADBException e){
+                        throw org.apache.axis2.AxisFault.makeFault(e);
+                    }
+                    }
+                    
+                         private org.example.www.servicioalmacen.ActualizarStockResponse wrapactualizarStock(){
+                                org.example.www.servicioalmacen.ActualizarStockResponse wrappedElement = new org.example.www.servicioalmacen.ActualizarStockResponse();
+                                return wrappedElement;
+                         }
+                    
                     private  org.apache.axiom.soap.SOAPEnvelope toEnvelope(org.apache.axiom.soap.SOAPFactory factory, org.example.www.servicioalmacen.ComprobarStockResponse param, boolean optimizeContent, javax.xml.namespace.QName methodQName)
                         throws org.apache.axis2.AxisFault{
                       try{
@@ -133,6 +199,20 @@
 
         try {
         
+                if (org.example.www.servicioalmacen.ActualizarStock.class.equals(type)){
+                
+                        return org.example.www.servicioalmacen.ActualizarStock.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+            
+                if (org.example.www.servicioalmacen.ActualizarStockResponse.class.equals(type)){
+                
+                        return org.example.www.servicioalmacen.ActualizarStockResponse.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+            
                 if (org.example.www.servicioalmacen.ComprobarStock.class.equals(type)){
                 
                         return org.example.www.servicioalmacen.ComprobarStock.Factory.parse(param.getXMLStreamReaderWithoutCaching());

@@ -30,14 +30,14 @@
                         */
 
                         
-                                    protected int localOut ;
+                                    protected boolean localOut ;
                                 
 
                            /**
                            * Auto generated getter method
-                           * @return int
+                           * @return boolean
                            */
-                           public  int getOut(){
+                           public  boolean getOut(){
                                return localOut;
                            }
 
@@ -47,7 +47,7 @@
                                * Auto generated setter method
                                * @param param Out
                                */
-                               public void setOut(int param){
+                               public void setOut(boolean param){
                             
                                             this.localOut=param;
                                        
@@ -117,7 +117,7 @@
                                     namespace = "";
                                     writeStartElement(null, namespace, "out", xmlWriter);
                              
-                                               if (localOut==java.lang.Integer.MIN_VALUE) {
+                                               if (false) {
                                            
                                                          throw new org.apache.axis2.databinding.ADBException("out cannot be null!!");
                                                       
@@ -407,7 +407,7 @@
                                     java.lang.String content = reader.getElementText();
                                     
                                               object.setOut(
-                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToInt(content));
+                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToBoolean(content));
                                               
                                         reader.next();
                                     
