@@ -21,35 +21,35 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://www.example.org/ServicioProveedor/",
                 "OrdenarCompra",
-                "ns2");
+                "ns1");
 
             
 
                         /**
-                        * field for NumeroUnidades
+                        * field for NumeroElementos
                         */
 
                         
-                                    protected int localNumeroUnidades ;
+                                    protected int localNumeroElementos ;
                                 
 
                            /**
                            * Auto generated getter method
                            * @return int
                            */
-                           public  int getNumeroUnidades(){
-                               return localNumeroUnidades;
+                           public  int getNumeroElementos(){
+                               return localNumeroElementos;
                            }
 
                            
                         
                             /**
                                * Auto generated setter method
-                               * @param param NumeroUnidades
+                               * @param param NumeroElementos
                                */
-                               public void setNumeroUnidades(int param){
+                               public void setNumeroElementos(int param){
                             
-                                            this.localNumeroUnidades=param;
+                                            this.localNumeroElementos=param;
                                        
 
                                }
@@ -145,14 +145,14 @@
                    }
                
                                     namespace = "";
-                                    writeStartElement(null, namespace, "numeroUnidades", xmlWriter);
+                                    writeStartElement(null, namespace, "numeroElementos", xmlWriter);
                              
-                                               if (localNumeroUnidades==java.lang.Integer.MIN_VALUE) {
+                                               if (localNumeroElementos==java.lang.Integer.MIN_VALUE) {
                                            
-                                                         throw new org.apache.axis2.databinding.ADBException("numeroUnidades cannot be null!!");
+                                                         throw new org.apache.axis2.databinding.ADBException("numeroElementos cannot be null!!");
                                                       
                                                } else {
-                                                    xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localNumeroUnidades));
+                                                    xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localNumeroElementos));
                                                }
                                     
                                    xmlWriter.writeEndElement();
@@ -182,7 +182,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://www.example.org/ServicioProveedor/")){
-                return "ns2";
+                return "ns1";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -361,10 +361,10 @@
 
                 
                                       elementList.add(new javax.xml.namespace.QName("",
-                                                                      "numeroUnidades"));
+                                                                      "numeroElementos"));
                                  
                                 elementList.add(
-                                   org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localNumeroUnidades));
+                                   org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localNumeroElementos));
                             
                                       elementList.add(new javax.xml.namespace.QName("",
                                                                       "referenciaProducto"));
@@ -453,17 +453,17 @@
                                     
                                     while (!reader.isStartElement() && !reader.isEndElement()) reader.next();
                                 
-                                    if (reader.isStartElement() && new javax.xml.namespace.QName("","numeroUnidades").equals(reader.getName())){
+                                    if (reader.isStartElement() && new javax.xml.namespace.QName("","numeroElementos").equals(reader.getName())){
                                 
                                     nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
                                     if ("true".equals(nillableValue) || "1".equals(nillableValue)){
-                                        throw new org.apache.axis2.databinding.ADBException("The element: "+"numeroUnidades" +"  cannot be null");
+                                        throw new org.apache.axis2.databinding.ADBException("The element: "+"numeroElementos" +"  cannot be null");
                                     }
                                     
 
                                     java.lang.String content = reader.getElementText();
                                     
-                                              object.setNumeroUnidades(
+                                              object.setNumeroElementos(
                                                     org.apache.axis2.databinding.utils.ConverterUtil.convertToInt(content));
                                               
                                         reader.next();

@@ -5,7 +5,7 @@
       <xsd:element name="SolicitarPresupuesto">
         <xsd:complexType>
           <xsd:sequence>
-          	<xsd:element name="numeroUnidades" type="xsd:int"></xsd:element>
+          	<xsd:element name="numeroElementos" type="xsd:int"></xsd:element>
           	<xsd:element name="referenciaProducto" type="xsd:string" />
           </xsd:sequence>
         </xsd:complexType>
@@ -21,7 +21,7 @@
       	<xsd:complexType>
       		<xsd:sequence>
 
-      			<xsd:element name="numeroUnidades" type="xsd:int"></xsd:element>
+      			<xsd:element name="numeroElementos" type="xsd:int"></xsd:element>
       			<xsd:element name="referenciaProducto"
       				type="xsd:string">
       			</xsd:element>
