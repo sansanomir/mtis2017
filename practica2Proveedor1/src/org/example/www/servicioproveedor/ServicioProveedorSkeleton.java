@@ -60,7 +60,7 @@ import com.mysql.jdbc.PreparedStatement;
 	                	 String sql = "UPDATE producto SET stock = ? "
 				                  + " WHERE referenciaProducto = ?";               	 
 	                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
-	                 		 stmt.setInt(1,cantidad-ordenarCompra.getNumeroUnidades());
+	                 		 stmt.setInt(1,cantidad-ordenarCompra.getNumeroElementos());
 	                 		 stmt.setString(2,ordenarCompra.getReferenciaProducto());
 	                 		 stmt.executeUpdate();
 	                 		 resp.setOut(true);
@@ -89,10 +89,11 @@ import com.mysql.jdbc.PreparedStatement;
             	 resp.setOut(false);
             	 String sql = "select * from producto where referenciaProducto = '"
             	 + solicitarPresupuesto.getReferenciaProducto()+"'";
+            	 System.out.println(solicitarPresupuesto.getNumeroElementos());
              	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
              		  ResultSet rs = stmt.executeQuery();  
              		  while (rs.next()){
-             			  if(solicitarPresupuesto.getNumeroUnidades() <= rs.getInt("producto.stock")){
+             			  if(solicitarPresupuesto.getNumeroElementos() <= rs.getInt("producto.stock")){				  
              				  resp.setOut(true);
              				  return resp;
              			  }
