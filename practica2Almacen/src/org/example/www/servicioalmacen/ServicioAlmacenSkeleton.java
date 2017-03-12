@@ -41,17 +41,35 @@ import com.mysql.jdbc.PreparedStatement;
             {
                 	 ActualizarStockResponse resp = new ActualizarStockResponse();
                 	 resp.setOut(false);
-                	 String sql = "UPDATE producto SET stock = ? "
-			                  + " WHERE referenciaProducto = ?";               	 
-                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
-                 		 stmt.setInt(1,actualizarStock.getNumeroUnidades());
-                 		 stmt.setString(2,actualizarStock.getReferenciaProducto());
-                 		 stmt.executeUpdate();
-                 		 resp.setOut(true);
+                	 
+                	 int cantidad=-1;
+                	 String sqlc = "select * from producto where referenciaProducto = '"
+                        	 + actualizarStock.getReferenciaProducto()+"'";
+                	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sqlc)){
+                 		  ResultSet rs = stmt.executeQuery();           		 
+                 		  while (rs.next()){
+                 			 cantidad= rs.getInt("stock");
+                 		  }           		                    		 
                  		} catch (SQLException sqle) { 
                  		  System.out.println("Error en la ejecución:" 
                  		    + sqle.getErrorCode() + " " + sqle.getMessage());    
                  		}
+                	 if(cantidad == -1){
+                		 return resp;
+                	 }
+                	 else{
+	                	 String sql = "UPDATE producto SET stock = ? "
+				                  + " WHERE referenciaProducto = ?";               	 
+	                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
+	                 		 stmt.setInt(1,cantidad-actualizarStock.getNumeroUnidades());
+	                 		 stmt.setString(2,actualizarStock.getReferenciaProducto());
+	                 		 stmt.executeUpdate();
+	                 		 resp.setOut(true);
+	                 		} catch (SQLException sqle) { 
+	                 		  System.out.println("Error en la ejecución:" 
+	                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+	                 		}
+                	 }
                 	 return resp;      
         }
      
@@ -76,7 +94,6 @@ import com.mysql.jdbc.PreparedStatement;
                  		  ResultSet rs = stmt.executeQuery();  
                  		  while (rs.next()){
                  			  if(comprobarStock.getNumeroUnidades() <= rs.getInt("producto.stock")){
-                 				  System.out.println("int"+rs.getInt("producto.stock"));
                  				  resp.setOut(true);
                  				  return resp;
                  			  }
