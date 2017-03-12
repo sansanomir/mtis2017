@@ -25,7 +25,23 @@ import com.mysql.jdbc.PreparedStatement;
        	 	Class.forName("com.mysql.jdbc.Driver");
        	 	con = (Connection)DriverManager.getConnection(url,"root","root");
     	}
-         
+    	
+        private float getPrecioProducto(String referencia){
+        	float precio = -1;
+        	String sqlc = "select * from producto where referenciaProducto = '"
+               	 + referencia+"'";
+	       	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sqlc)){
+	        		  ResultSet rs = stmt.executeQuery();           		 
+	        		  while (rs.next()){
+	        			 precio= rs.getInt("precio");
+	        			 return precio;
+	        		  }           		                    		 
+	        		} catch (SQLException sqle) { 
+	        		  System.out.println("Error en la ejecución:" 
+	        		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+	        		}
+        	return precio;
+        }
         /**
          * Auto generated method signature
          * 
@@ -60,7 +76,7 @@ import com.mysql.jdbc.PreparedStatement;
 	                	 String sql = "UPDATE producto SET stock = ? "
 				                  + " WHERE referenciaProducto = ?";               	 
 	                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
-	                 		 stmt.setInt(1,cantidad-ordenarCompra.getNumeroElementos());
+	                 		 stmt.setInt(1,cantidad-ordenarCompra.getNumeroUnidades());
 	                 		 stmt.setString(2,ordenarCompra.getReferenciaProducto());
 	                 		 stmt.executeUpdate();
 	                 		 resp.setOut(true);
@@ -86,15 +102,16 @@ import com.mysql.jdbc.PreparedStatement;
                   )
             {
             	 SolicitarPresupuestoResponse resp = new SolicitarPresupuestoResponse();
-            	 resp.setOut(false);
+            	 resp.setOut(-1);
             	 String sql = "select * from producto where referenciaProducto = '"
             	 + solicitarPresupuesto.getReferenciaProducto()+"'";
-            	 System.out.println(solicitarPresupuesto.getNumeroElementos());
+            	 System.out.println(solicitarPresupuesto.getNumeroUnidades());
              	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
              		  ResultSet rs = stmt.executeQuery();  
              		  while (rs.next()){
-             			  if(solicitarPresupuesto.getNumeroElementos() <= rs.getInt("producto.stock")){				  
-             				  resp.setOut(true);
+             			  if(solicitarPresupuesto.getNumeroUnidades() <= rs.getInt("producto.stock")){				  
+             				  resp.setOut(solicitarPresupuesto.getNumeroUnidades()
+             						  *getPrecioProducto(solicitarPresupuesto.getReferenciaProducto()));
              				  return resp;
              			  }
              		  }           		                    		 

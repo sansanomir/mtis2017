@@ -26,30 +26,30 @@
             
 
                         /**
-                        * field for NumeroElementos
+                        * field for NumeroUnidades
                         */
 
                         
-                                    protected int localNumeroElementos ;
+                                    protected int localNumeroUnidades ;
                                 
 
                            /**
                            * Auto generated getter method
                            * @return int
                            */
-                           public  int getNumeroElementos(){
-                               return localNumeroElementos;
+                           public  int getNumeroUnidades(){
+                               return localNumeroUnidades;
                            }
 
                            
                         
                             /**
                                * Auto generated setter method
-                               * @param param NumeroElementos
+                               * @param param NumeroUnidades
                                */
-                               public void setNumeroElementos(int param){
+                               public void setNumeroUnidades(int param){
                             
-                                            this.localNumeroElementos=param;
+                                            this.localNumeroUnidades=param;
                                        
 
                                }
@@ -145,14 +145,14 @@
                    }
                
                                     namespace = "";
-                                    writeStartElement(null, namespace, "numeroElementos", xmlWriter);
+                                    writeStartElement(null, namespace, "numeroUnidades", xmlWriter);
                              
-                                               if (localNumeroElementos==java.lang.Integer.MIN_VALUE) {
+                                               if (localNumeroUnidades==java.lang.Integer.MIN_VALUE) {
                                            
-                                                         throw new org.apache.axis2.databinding.ADBException("numeroElementos cannot be null!!");
+                                                         throw new org.apache.axis2.databinding.ADBException("numeroUnidades cannot be null!!");
                                                       
                                                } else {
-                                                    xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localNumeroElementos));
+                                                    xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localNumeroUnidades));
                                                }
                                     
                                    xmlWriter.writeEndElement();
@@ -361,10 +361,10 @@
 
                 
                                       elementList.add(new javax.xml.namespace.QName("",
-                                                                      "numeroElementos"));
+                                                                      "numeroUnidades"));
                                  
                                 elementList.add(
-                                   org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localNumeroElementos));
+                                   org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localNumeroUnidades));
                             
                                       elementList.add(new javax.xml.namespace.QName("",
                                                                       "referenciaProducto"));
@@ -453,17 +453,17 @@
                                     
                                     while (!reader.isStartElement() && !reader.isEndElement()) reader.next();
                                 
-                                    if (reader.isStartElement() && new javax.xml.namespace.QName("","numeroElementos").equals(reader.getName())){
+                                    if (reader.isStartElement() && new javax.xml.namespace.QName("","numeroUnidades").equals(reader.getName())){
                                 
                                     nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
                                     if ("true".equals(nillableValue) || "1".equals(nillableValue)){
-                                        throw new org.apache.axis2.databinding.ADBException("The element: "+"numeroElementos" +"  cannot be null");
+                                        throw new org.apache.axis2.databinding.ADBException("The element: "+"numeroUnidades" +"  cannot be null");
                                     }
                                     
 
                                     java.lang.String content = reader.getElementText();
                                     
-                                              object.setNumeroElementos(
+                                              object.setNumeroUnidades(
                                                     org.apache.axis2.databinding.utils.ConverterUtil.convertToInt(content));
                                               
                                         reader.next();

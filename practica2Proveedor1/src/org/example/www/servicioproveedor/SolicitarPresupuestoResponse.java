@@ -30,14 +30,14 @@
                         */
 
                         
-                                    protected boolean localOut ;
+                                    protected float localOut ;
                                 
 
                            /**
                            * Auto generated getter method
-                           * @return boolean
+                           * @return float
                            */
-                           public  boolean getOut(){
+                           public  float getOut(){
                                return localOut;
                            }
 
@@ -47,7 +47,7 @@
                                * Auto generated setter method
                                * @param param Out
                                */
-                               public void setOut(boolean param){
+                               public void setOut(float param){
                             
                                             this.localOut=param;
                                        
@@ -117,7 +117,7 @@
                                     namespace = "";
                                     writeStartElement(null, namespace, "out", xmlWriter);
                              
-                                               if (false) {
+                                               if (java.lang.Float.isNaN(localOut)) {
                                            
                                                          throw new org.apache.axis2.databinding.ADBException("out cannot be null!!");
                                                       
@@ -407,7 +407,7 @@
                                     java.lang.String content = reader.getElementText();
                                     
                                               object.setOut(
-                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToBoolean(content));
+                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToFloat(content));
                                               
                                         reader.next();
                                     

@@ -13,7 +13,7 @@
       <xsd:element name="SolicitarPresupuestoResponse">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element name="out" type="xsd:boolean"/>
+            <xsd:element name="out" type="xsd:float"/>
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>

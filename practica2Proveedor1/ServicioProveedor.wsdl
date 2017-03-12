@@ -5,7 +5,7 @@
       <xsd:element name="SolicitarPresupuesto">
         <xsd:complexType>
           <xsd:sequence>
-          	<xsd:element name="numeroElementos" type="xsd:int"></xsd:element>
+          	<xsd:element name="numeroUnidades" type="xsd:int"></xsd:element>
           	<xsd:element name="referenciaProducto" type="xsd:string" />
           </xsd:sequence>
         </xsd:complexType>
@@ -13,7 +13,7 @@
       <xsd:element name="SolicitarPresupuestoResponse">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element name="out" type="xsd:boolean"/>
+            <xsd:element name="out" type="xsd:float"/>
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
@@ -21,7 +21,7 @@
       	<xsd:complexType>
       		<xsd:sequence>
 
-      			<xsd:element name="numeroElementos" type="xsd:int"></xsd:element>
+      			<xsd:element name="numeroUnidades" type="xsd:int"></xsd:element>
       			<xsd:element name="referenciaProducto"
       				type="xsd:string">
       			</xsd:element>
@@ -62,25 +62,32 @@
   </wsdl:portType>
   <wsdl:binding name="ServicioProveedorSOAP"
   	type="tns:ServicioProveedor">
+
   	<soap:binding style="document"
   		transport="http://schemas.xmlsoap.org/soap/http" />
   	<wsdl:operation name="SolicitarPresupuesto">
+
   		<soap:operation
   			soapAction="http://www.example.org/ServicioProveedor/SolicitarPresupuesto" />
   		<wsdl:input>
+
   			<soap:body use="literal" />
   		</wsdl:input>
   		<wsdl:output>
+
   			<soap:body use="literal" />
   		</wsdl:output>
   	</wsdl:operation>
   	<wsdl:operation name="OrdenarCompra">
+
   		<soap:operation
   			soapAction="http://www.example.org/ServicioProveedor/OrdenarCompra" />
   		<wsdl:input>
+
   			<soap:body use="literal" />
   		</wsdl:input>
   		<wsdl:output>
+
   			<soap:body use="literal" />
   		</wsdl:output>
   	</wsdl:operation>

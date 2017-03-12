@@ -5,7 +5,7 @@
  * This file was auto-generated from WSDL
  * by the Apache Axis2 version: 1.6.3  Built on : Jun 27, 2015 (11:17:49 BST)
  */
-    package org.example.www.servicioproveedor;
+package org.example.www.servicioproveedor;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,7 +25,23 @@ import com.mysql.jdbc.PreparedStatement;
        	 	Class.forName("com.mysql.jdbc.Driver");
        	 	con = (Connection)DriverManager.getConnection(url,"root","root");
     	}
-         
+    	
+        private float getPrecioProducto(String referencia){
+        	float precio = -1;
+        	String sqlc = "select * from producto where referenciaProducto = '"
+               	 + referencia+"'";
+	       	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sqlc)){
+	        		  ResultSet rs = stmt.executeQuery();           		 
+	        		  while (rs.next()){
+	        			 precio= rs.getInt("precio");
+	        			 return precio;
+	        		  }           		                    		 
+	        		} catch (SQLException sqle) { 
+	        		  System.out.println("Error en la ejecución:" 
+	        		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+	        		}
+        	return precio;
+        }
         /**
          * Auto generated method signature
          * 
@@ -86,14 +102,16 @@ import com.mysql.jdbc.PreparedStatement;
                   )
             {
             	 SolicitarPresupuestoResponse resp = new SolicitarPresupuestoResponse();
-            	 resp.setOut(false);
+            	 resp.setOut(-1);
             	 String sql = "select * from producto where referenciaProducto = '"
             	 + solicitarPresupuesto.getReferenciaProducto()+"'";
+            	 System.out.println(solicitarPresupuesto.getNumeroUnidades());
              	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
              		  ResultSet rs = stmt.executeQuery();  
              		  while (rs.next()){
-             			  if(solicitarPresupuesto.getNumeroUnidades() <= rs.getInt("producto.stock")){
-             				  resp.setOut(true);
+             			  if(solicitarPresupuesto.getNumeroUnidades() <= rs.getInt("producto.stock")){				  
+             				  resp.setOut(solicitarPresupuesto.getNumeroUnidades()
+             						  *getPrecioProducto(solicitarPresupuesto.getReferenciaProducto()));
              				  return resp;
              			  }
              		  }           		                    		 
@@ -105,3 +123,4 @@ import com.mysql.jdbc.PreparedStatement;
         }
      
     }
+    
