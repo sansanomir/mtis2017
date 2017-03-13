@@ -5,11 +5,12 @@
  * This file was auto-generated from WSDL
  * by the Apache Axis2 version: 1.6.3  Built on : Jun 27, 2015 (11:17:49 BST)
  */
-package org.example.www.servicioproveedor;
+    package org.example.www.servicioproveedor;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -25,8 +26,8 @@ import com.mysql.jdbc.PreparedStatement;
        	 	Class.forName("com.mysql.jdbc.Driver");
        	 	con = (Connection)DriverManager.getConnection(url,"root","root");
     	}
-    	
-        private float getPrecioProducto(String referencia){
+        
+    	private float getPrecioProducto(String referencia){
         	float precio = -1;
         	String sqlc = "select * from producto where referenciaProducto = '"
                	 + referencia+"'";
@@ -54,38 +55,87 @@ import com.mysql.jdbc.PreparedStatement;
                   org.example.www.servicioproveedor.OrdenarCompra ordenarCompra
                   )
             {
-                	OrdenarCompraResponse resp = new OrdenarCompraResponse();
-                	 resp.setOut(false);
-                	 
-                	 int cantidad=-1;
-                	 String sqlc = "select * from producto where referenciaProducto = '"
-                        	 + ordenarCompra.getReferenciaProducto()+"'";
-                	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sqlc)){
-                 		  ResultSet rs = stmt.executeQuery();           		 
+            	 OrdenarCompraResponse resp = new OrdenarCompraResponse();
+            	 resp.setOut(false);
+            	 
+            	 int cantidad=-1;
+            	 String sqlc = "select * from producto where referenciaProducto = '"
+                    	 + ordenarCompra.getReferenciaProducto()+"'";
+            	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sqlc)){
+             		  ResultSet rs = stmt.executeQuery();           		 
+             		  while (rs.next()){
+             			 cantidad= rs.getInt("stock");
+             		  }           		                    		 
+             		} catch (SQLException sqle) { 
+             		  System.out.println("Error en la ejecución:" 
+             		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+             		}
+            	 if(cantidad == -1){
+            		 return resp;
+            	 }
+            	 else{
+                	 String sql = "UPDATE producto SET stock = ? "
+			                  + " WHERE referenciaProducto = ?";               	 
+                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
+                 		 stmt.setInt(1,cantidad-ordenarCompra.getNumeroUnidades());
+                 		 stmt.setString(2,ordenarCompra.getReferenciaProducto());
+                 		 stmt.executeUpdate();
+                 		 resp.setOut(true);
+                 		} catch (SQLException sqle) { 
+                 		  System.out.println("Error en la ejecución:" 
+                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+                 		}
+            	 }
+            	 return resp;
+        }
+     
+         
+        /**
+         * Auto generated method signature
+         * 
+                                     * @param actualizarStock 
+             * @return actualizarStockResponse 
+         */
+        
+                 public org.example.www.servicioproveedor.ActualizarStockResponse actualizarStock
+                  (
+                  org.example.www.servicioproveedor.ActualizarStock actualizarStock
+                  )
+            {
+                	 ActualizarStockResponse resp = new  ActualizarStockResponse();
+                	 String sql = "select * from producto where referenciaProducto = '"
+                	 + actualizarStock.getReferenciaProducto()+"'";
+                	 int cantidadFinal=-1;
+
+                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
+                 		  ResultSet rs = stmt.executeQuery();  
                  		  while (rs.next()){
-                 			 cantidad= rs.getInt("stock");
+                 			  cantidadFinal = rs.getInt("producto.stock") - actualizarStock.getNumeroUnidades();
                  		  }           		                    		 
                  		} catch (SQLException sqle) { 
                  		  System.out.println("Error en la ejecución:" 
                  		    + sqle.getErrorCode() + " " + sqle.getMessage());    
                  		}
-                	 if(cantidad == -1){
-                		 return resp;
-                	 }
-                	 else{
-	                	 String sql = "UPDATE producto SET stock = ? "
-				                  + " WHERE referenciaProducto = ?";               	 
-	                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
-	                 		 stmt.setInt(1,cantidad-ordenarCompra.getNumeroUnidades());
-	                 		 stmt.setString(2,ordenarCompra.getReferenciaProducto());
-	                 		 stmt.executeUpdate();
-	                 		 resp.setOut(true);
-	                 		} catch (SQLException sqle) { 
-	                 		  System.out.println("Error en la ejecución:" 
-	                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
-	                 		}
-                	 }
-                	 return resp;     
+                 		if(cantidadFinal ==-1){
+                 			resp.setOut(false);
+                 		}
+                 		else{
+                 			
+                 			String sql1 = "UPDATE producto SET stock = ? "
+  				                  + " WHERE referenciaProducto = ?";               	 
+	  	                 	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql1)) {
+	  	                 		 stmt.setInt(1,cantidadFinal);
+	  	                 		 stmt.setString(2,actualizarStock.getReferenciaProducto());
+	  	                 		 stmt.executeUpdate();
+	  	                 		 resp.setOut(true);
+	  	                 		 return resp;
+	  	                 		} catch (SQLException sqle) { 
+	  	                 		  System.out.println("Error en la ejecución:" 
+	  	                 		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+	  	                 		}
+                 		}
+                 			
+                	 return resp;
         }
      
          
@@ -105,7 +155,6 @@ import com.mysql.jdbc.PreparedStatement;
             	 resp.setOut(-1);
             	 String sql = "select * from producto where referenciaProducto = '"
             	 + solicitarPresupuesto.getReferenciaProducto()+"'";
-            	 System.out.println(solicitarPresupuesto.getNumeroUnidades());
              	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql)) {
              		  ResultSet rs = stmt.executeQuery();  
              		  while (rs.next()){
@@ -119,8 +168,8 @@ import com.mysql.jdbc.PreparedStatement;
              		  System.out.println("Error en la ejecución:" 
              		    + sqle.getErrorCode() + " " + sqle.getMessage());    
              		}
-            	 return resp; 
+            	 return resp;
         }
      
     }
-    
+   
