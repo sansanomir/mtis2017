@@ -5,7 +5,7 @@
          suppressJoinFailure="yes"
          xmlns:tns="http://practica2B.mtis"
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-         xmlns:ns="http://www.example.org/ServicioAlmacen/" xmlns:ns1="http://www.w3.org/2001/XMLSchema">
+         xmlns:ns="http://www.example.org/ServicioAlmacen/" xmlns:ns1="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.example.org/ServicioProveedor/" xmlns:ns2="http://www.example.org/p1/" xmlns:ns3="http://www.example.org/p2/" xmlns:ns4="http://www.example.org/p3/">
 
     <!-- Import the client WSDL -->
     <bpel:import namespace="http://www.example.org/ServicioAlmacen/" location="ServicioAlmacen.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"></bpel:import>
@@ -23,6 +23,20 @@
                      myRole="practica2BProvider"
                      />
         <bpel:partnerLink name="AlmacenPL" partnerLinkType="tns:AlmacenPLN" partnerRole="AlmacenRole"></bpel:partnerLink>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <bpel:partnerLink name="p1PL" partnerLinkType="tns:p1PLN" partnerRole="p1Role"></bpel:partnerLink>
+        <bpel:partnerLink name="p2PL" partnerLinkType="tns:p2PLN" partnerRole="p2Role"></bpel:partnerLink>
+        
+        <bpel:partnerLink name="p3PL" partnerLinkType="tns:p3PLN" partnerRole="p3Role"></bpel:partnerLink>
     </bpel:partnerLinks>
   
     <!-- ================================================================= -->         
@@ -41,7 +55,82 @@
                   messageType="tns:practica2BResponseMessage"/>
         <bpel:variable name="AlmacenPLResponse" messageType="ns:comprobarStockResponse"></bpel:variable>
         <bpel:variable name="AlmacenPLRequest" messageType="ns:comprobarStockRequest"></bpel:variable>
-        <bpel:variable name="existenEnAlmacen" type="ns1:boolean"></bpel:variable>
+        
+        
+        
+        
+        <bpel:variable name="AlmacenPLResponse1" messageType="ns:actualizarStockResponse"></bpel:variable>
+        <bpel:variable name="AlmacenPLRequest1" messageType="ns:actualizarStockRequest"></bpel:variable>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <bpel:variable name="Presupuesto1" type="ns1:float"></bpel:variable>
+        <bpel:variable name="Presupuesto2" type="ns1:float"></bpel:variable>
+        <bpel:variable name="Presupuesto3" type="ns1:float"></bpel:variable>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <bpel:variable name="hayStockAlmacen" type="ns1:boolean"></bpel:variable>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <bpel:variable name="p1PLResponse" messageType="ns2:SolicitarPresupuestoResponse"></bpel:variable>
+        <bpel:variable name="p1PLRequest" messageType="ns2:SolicitarPresupuestoRequest"></bpel:variable>
+        <bpel:variable name="p1PLResponse1" messageType="ns2:ActualizarStockResponse"></bpel:variable>
+        <bpel:variable name="p1PLRequest1" messageType="ns2:ActualizarStockRequest"></bpel:variable>
+        <bpel:variable name="p2PLResponse" messageType="ns3:SolicitarPresupuestoResponse"></bpel:variable>
+        <bpel:variable name="p2PLRequest" messageType="ns3:SolicitarPresupuestoRequest"></bpel:variable>
+        <bpel:variable name="p2PLResponse1" messageType="ns3:ActualizarStockResponse"></bpel:variable>
+        <bpel:variable name="p2PLRequest1" messageType="ns3:ActualizarStockRequest"></bpel:variable>
+        
+        
+        <bpel:variable name="p3PLResponse" messageType="ns4:SolicitarPresupuestoResponse"></bpel:variable>
+        <bpel:variable name="p3PLRequest" messageType="ns4:SolicitarPresupuestoRequest"></bpel:variable>
+        <bpel:variable name="p3PLResponse1" messageType="ns4:ActualizarStockResponse"></bpel:variable>
+        <bpel:variable name="p3PLRequest1" messageType="ns4:ActualizarStockRequest"></bpel:variable>
+        <bpel:variable name="p1PLResponse2" messageType="ns2:OrdenarCompraResponse"></bpel:variable>
+        <bpel:variable name="p1PLRequest2" messageType="ns2:OrdenarCompraRequest"></bpel:variable>
+        <bpel:variable name="p2PLResponse2" messageType="ns3:OrdenarCompraResponse"></bpel:variable>
+        <bpel:variable name="p2PLRequest2" messageType="ns3:OrdenarCompraRequest"></bpel:variable>
+        <bpel:variable name="p3PLResponse2" messageType="ns4:OrdenarCompraResponse"></bpel:variable>
+        <bpel:variable name="p3PLRequest2" messageType="ns4:OrdenarCompraRequest"></bpel:variable>
     </bpel:variables>
 
     <!-- ================================================================= -->         
@@ -49,15 +138,10 @@
     <!-- Set of activities coordinating the flow of messages across the    -->
     <!-- services integrated within this business process                  -->
     <!-- ================================================================= -->         
-    <bpel:sequence name="main">
-        
-        <!-- Receive input from requester. 
+    <bpel:sequence name="main"><!-- Receive input from requester. 
              Note: This maps to operation defined in practica2B.wsdl 
              -->
-        <bpel:receive name="receiveInput" partnerLink="client"
-                 portType="tns:practica2B"
-                 operation="process" variable="input"
-                 createInstance="yes"/>
+        <bpel:receive name="receiveInput" partnerLink="client" portType="tns:practica2B" operation="process" variable="input" createInstance="yes" />
         
         <!-- Generate reply to synchronous request -->
         <bpel:assign validate="no" name="AssignE">
@@ -93,24 +177,566 @@
         
         
         
-        <bpel:assign validate="no" name="AssignS"><bpel:copy>
-                <bpel:from><bpel:literal><tns:practica2BResponse xmlns:tns="http://practica2B.mtis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <tns:result>true</tns:result>
-</tns:practica2BResponse>
-</bpel:literal></bpel:from>
-                <bpel:to variable="output" part="payload"></bpel:to>
-            </bpel:copy>
+        
+        
+        <bpel:assign validate="no" name="AssignHayStock">
             <bpel:copy>
                 <bpel:from part="parameters" variable="AlmacenPLResponse">
                     <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[out]]></bpel:query>
                 </bpel:from>
-                <bpel:to part="payload" variable="output">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:result]]></bpel:query>
-                </bpel:to>
+                <bpel:to variable="hayStockAlmacen"></bpel:to>
             </bpel:copy>
-        
         </bpel:assign>
+        <bpel:if name="If">
+            <bpel:condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[$hayStockAlmacen='true']]></bpel:condition>
+            <bpel:sequence>
+                <bpel:assign validate="no" name="AssignCI">
+                    <bpel:copy>
+                        <bpel:from><bpel:literal><tns:actualizarStock xmlns:tns="http://www.example.org/ServicioAlmacen/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:actualizarStock>
+</bpel:literal></bpel:from>
+                        <bpel:to variable="AlmacenPLRequest1" part="parameters"></bpel:to>
+                    </bpel:copy>
+                    <bpel:copy>
+                    <bpel:from part="payload" variable="input">
+                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                                <![CDATA[tns:numeroUnidades]]>
+                            </bpel:query>
+                        </bpel:from>
+                    <bpel:to part="parameters" variable="AlmacenPLRequest1">
+                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                        </bpel:to>
+                </bpel:copy>
+                    <bpel:copy>
+                        <bpel:from part="payload" variable="input">
+                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                        </bpel:from>
+                        <bpel:to part="parameters" variable="AlmacenPLRequest1">
+                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                        </bpel:to>
+                    </bpel:copy>
+                </bpel:assign>
+                <bpel:invoke name="InvokeAS" partnerLink="AlmacenPL" operation="actualizarStock" portType="ns:ServicioAlmacen" inputVariable="AlmacenPLRequest1" outputVariable="AlmacenPLResponse1"></bpel:invoke>
+                <bpel:assign validate="no" name="AssignCS">
+                    
+                    
+                    <bpel:copy>
+                        <bpel:from><bpel:literal><tns:practica2BResponse xmlns:tns="http://practica2B.mtis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tns:result>true</tns:result>
+</tns:practica2BResponse>
+</bpel:literal></bpel:from>
+                        <bpel:to variable="output" part="payload"></bpel:to>
+                    </bpel:copy>
+                    <bpel:copy>
+                        <bpel:from part="parameters" variable="AlmacenPLResponse1">
+                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[out]]></bpel:query>
+                        </bpel:from>
+                        <bpel:to part="payload" variable="output">
+                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:result]]></bpel:query>
+                        </bpel:to>
+                    </bpel:copy>
+                </bpel:assign>
+                
+            </bpel:sequence>
+            <bpel:else>
+                <bpel:sequence name="Proveedores">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <bpel:flow name="Flow"><bpel:sequence name="Sequence1"><bpel:assign validate="no" name="AssignEntradaP1">
+                        
+                        
+                        
+                                <bpel:copy>
+                                    <bpel:from><bpel:literal><tns:SolicitarPresupuesto xmlns:tns="http://www.example.org/p1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:SolicitarPresupuesto>
+</bpel:literal></bpel:from>
+                                    <bpel:to variable="p1PLRequest" part="parameters"></bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p1PLRequest">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p1PLRequest">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                            <bpel:invoke name="InvokeSP1" partnerLink="p1PL" operation="SolicitarPresupuesto" portType="ns2:p1" inputVariable="p1PLRequest" outputVariable="p1PLResponse"></bpel:invoke>
+                            
+                        
+                            <bpel:assign validate="no" name="AssignS1">
+                                <bpel:copy>
+                                    <bpel:from part="parameters" variable="p1PLResponse">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[out]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to variable="Presupuesto1"></bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                        </bpel:sequence>
+            <bpel:sequence name="Sequence2">
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <bpel:assign validate="no" name="AssignEntradaP2">
+                                <bpel:copy>
+                                    <bpel:from><bpel:literal><tns:SolicitarPresupuesto xmlns:tns="http://www.example.org/p2/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:SolicitarPresupuesto>
+</bpel:literal></bpel:from>
+                                    <bpel:to variable="p2PLRequest" part="parameters"></bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p2PLRequest">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p2PLRequest">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                            <bpel:invoke name="InvokeSP2" partnerLink="p2PL" operation="SolicitarPresupuesto" portType="ns3:p2" inputVariable="p2PLRequest" outputVariable="p2PLResponse"></bpel:invoke>
+                            <bpel:assign validate="no" name="AssignS2">
+                                <bpel:copy>
+                                    <bpel:from part="parameters" variable="p2PLResponse">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[out]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to variable="Presupuesto2"></bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                        </bpel:sequence>
+            <bpel:sequence name="Sequence3">
+                            
+                            
+                            
+                            
+                            
+                            
+                            <bpel:assign validate="no" name="AssignEntradaP3">
+                                <bpel:copy>
+                                    <bpel:from><bpel:literal><tns:SolicitarPresupuesto xmlns:tns="http://www.example.org/p3/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:SolicitarPresupuesto>
+</bpel:literal></bpel:from>
+                                    <bpel:to variable="p3PLRequest" part="parameters"></bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p3PLRequest">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p3PLRequest">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                            <bpel:invoke name="InvokeSP3" partnerLink="p3PL" operation="SolicitarPresupuesto" portType="ns4:p3" inputVariable="p3PLRequest" outputVariable="p3PLResponse"></bpel:invoke>
+                            <bpel:assign validate="no" name="AssignS3">
+                                <bpel:copy>
+                                    <bpel:from part="parameters" variable="p3PLResponse">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[out]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to variable="Presupuesto3"></bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                        </bpel:sequence>
+        
+                    </bpel:flow>
+                    <bpel:if name="IfComprobarMenor">
+                        <bpel:condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[$Presupuesto1 < $Presupuesto2 and $Presupuesto1 < $Presupuesto3]]></bpel:condition>
+                        <bpel:sequence name="SequenceComprar1">
+                            
+                            
+                            
+                            
+                            
+                            
+                            <bpel:assign validate="no" name="AssignC1">
+                                <bpel:copy>
+                                    <bpel:from><bpel:literal><tns:ActualizarStock xmlns:tns="http://www.example.org/p1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:ActualizarStock>
+</bpel:literal></bpel:from>
+                                    <bpel:to variable="p1PLRequest1" part="parameters"></bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p1PLRequest1">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p1PLRequest1">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                            <bpel:invoke name="InvokeC1" partnerLink="p1PL" operation="ActualizarStock" portType="ns2:p1" inputVariable="p1PLRequest1" outputVariable="p1PLResponse1"></bpel:invoke>
+                            <bpel:assign validate="no" name="Assign1">
+                                <bpel:copy>
+                                    <bpel:from><bpel:literal><tns:practica2BResponse xmlns:tns="http://practica2B.mtis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tns:result>true</tns:result>
+</tns:practica2BResponse>
+</bpel:literal></bpel:from>
+                                    <bpel:to variable="output" part="payload"></bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="parameters" variable="p1PLResponse1">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[out]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="payload" variable="output">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:result]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                            <bpel:assign validate="no" name="AssignI1">
+                                <bpel:copy>
+                                    <bpel:from><bpel:literal><tns:OrdenarCompra xmlns:tns="http://www.example.org/p1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:OrdenarCompra>
+</bpel:literal></bpel:from>
+                                    <bpel:to variable="p1PLRequest2" part="parameters"></bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p1PLRequest2">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="p1PLRequest2">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                            <bpel:invoke name="InvokeO1" partnerLink="p1PL" operation="OrdenarCompra" portType="ns2:p1" inputVariable="p1PLRequest2" outputVariable="p1PLResponse2"></bpel:invoke>
+                            <bpel:assign validate="no" name="AssignAP1">
+                                <bpel:copy>
+                                    <bpel:from><bpel:literal><tns:actualizarStock xmlns:tns="http://www.example.org/ServicioAlmacen/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:actualizarStock>
+</bpel:literal></bpel:from>
+                                    <bpel:to variable="AlmacenPLRequest1" part="parameters"></bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="AlmacenPLRequest1">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from part="payload" variable="input">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                    </bpel:from>
+                                    <bpel:to part="parameters" variable="AlmacenPLRequest1">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                            <bpel:invoke name="InvokeAP1" partnerLink="AlmacenPL" operation="actualizarStock" portType="ns:ServicioAlmacen" inputVariable="AlmacenPLRequest1" outputVariable="AlmacenPLResponse1"></bpel:invoke>
+                        </bpel:sequence>
+                        <bpel:elseif>
+                            <bpel:condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[$Presupuesto2 < $Presupuesto1 and $Presupuesto2 < $Presupuesto3]]></bpel:condition>
+                            <bpel:sequence name="SequenceComprar2">
+                                
+                                
+                                
+                                
+                                <bpel:assign validate="no" name="AssignC2">
+                                    <bpel:copy>
+                                        <bpel:from><bpel:literal><tns:ActualizarStock xmlns:tns="http://www.example.org/p2/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:ActualizarStock>
+</bpel:literal></bpel:from>
+                                        <bpel:to variable="p2PLRequest1" part="parameters"></bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="p2PLRequest1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="p2PLRequest1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                </bpel:assign>
+                                <bpel:invoke name="InvokeC2" partnerLink="p2PL" operation="ActualizarStock" portType="ns3:p2" inputVariable="p2PLRequest1" outputVariable="p2PLResponse1"></bpel:invoke>
+                                <bpel:assign validate="no" name="Assign2">
+                                    <bpel:copy>
+                                        <bpel:from><bpel:literal><tns:practica2BResponse xmlns:tns="http://practica2B.mtis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tns:result>true</tns:result>
+</tns:practica2BResponse>
+</bpel:literal></bpel:from>
+                                        <bpel:to variable="output" part="payload"></bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="parameters" variable="p2PLResponse1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[out]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="payload" variable="output">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:result]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                </bpel:assign>
+                                <bpel:assign validate="no" name="AssignI2">
+                                    <bpel:copy>
+                                        <bpel:from><bpel:literal><tns:OrdenarCompra xmlns:tns="http://www.example.org/p2/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:OrdenarCompra>
+</bpel:literal></bpel:from>
+                                        <bpel:to variable="p2PLRequest2" part="parameters"></bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="p2PLRequest2">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="p2PLRequest2">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                </bpel:assign>
+                                <bpel:invoke name="InvokeO2" partnerLink="p2PL" operation="OrdenarCompra" portType="ns3:p2" inputVariable="p2PLRequest2" outputVariable="p2PLResponse2"></bpel:invoke>
+                                <bpel:assign validate="no" name="AssignAP2">
+                                    <bpel:copy>
+                                        <bpel:from><bpel:literal><tns:actualizarStock xmlns:tns="http://www.example.org/ServicioAlmacen/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:actualizarStock>
+</bpel:literal></bpel:from>
+                                        <bpel:to variable="AlmacenPLRequest1" part="parameters"></bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="AlmacenPLRequest1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="AlmacenPLRequest1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                </bpel:assign>
+                                <bpel:invoke name="InvokeAP2" partnerLink="AlmacenPL" operation="actualizarStock" portType="ns:ServicioAlmacen" inputVariable="AlmacenPLRequest1" outputVariable="AlmacenPLResponse1"></bpel:invoke>
+                            </bpel:sequence>
+                        </bpel:elseif><bpel:elseif>
+                            <bpel:condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[$Presupuesto3 < $Presupuesto1 and $Presupuesto3 < $Presupuesto2]]></bpel:condition>
+                            <bpel:sequence name="SequenceComprar3">
+                                
+                                
+                                
+                            
+                            
+                            
+                            
+                                
+                                
+                                
+                                <bpel:assign validate="no" name="AssignC3">
+                                    <bpel:copy>
+                                        <bpel:from><bpel:literal><tns:ActualizarStock xmlns:tns="http://www.example.org/p3/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:ActualizarStock>
+</bpel:literal></bpel:from>
+                                        <bpel:to variable="p3PLRequest1" part="parameters"></bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="p3PLRequest1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="p3PLRequest1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                </bpel:assign>
+                                <bpel:invoke name="InvokeC3" partnerLink="p3PL" operation="ActualizarStock" portType="ns4:p3" inputVariable="p3PLRequest1" outputVariable="p3PLResponse1"></bpel:invoke>
+                                <bpel:assign validate="no" name="Assign3">
+                                    <bpel:copy>
+                                        <bpel:from><bpel:literal><tns:practica2BResponse xmlns:tns="http://practica2B.mtis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tns:result>true</tns:result>
+</tns:practica2BResponse>
+</bpel:literal></bpel:from>
+                                        <bpel:to variable="output" part="payload"></bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="parameters" variable="p3PLResponse1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[out]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="payload" variable="output">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:result]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                </bpel:assign>
+                                <bpel:assign validate="no" name="AssignI3">
+                                    <bpel:copy>
+                                        <bpel:from><bpel:literal><tns:OrdenarCompra xmlns:tns="http://www.example.org/p3/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:OrdenarCompra>
+</bpel:literal></bpel:from>
+                                        <bpel:to variable="p3PLRequest2" part="parameters"></bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="p3PLRequest2">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="p3PLRequest2">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                </bpel:assign>
+                                <bpel:invoke name="InvokeO3" partnerLink="p3PL" operation="OrdenarCompra" portType="ns4:p3" inputVariable="p3PLRequest2" outputVariable="p3PLResponse2"></bpel:invoke>
+                                <bpel:assign validate="no" name="AssignAP3">
+                                    <bpel:copy>
+                                        <bpel:from><bpel:literal><tns:actualizarStock xmlns:tns="http://www.example.org/ServicioAlmacen/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <numeroUnidades>0</numeroUnidades>
+  <referenciaProducto>referenciaProducto</referenciaProducto>
+</tns:actualizarStock>
+</bpel:literal></bpel:from>
+                                        <bpel:to variable="AlmacenPLRequest1" part="parameters"></bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:numeroUnidades]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="AlmacenPLRequest1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[numeroUnidades]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                    <bpel:copy>
+                                        <bpel:from part="payload" variable="input">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:referenciaProducto]]></bpel:query>
+                                        </bpel:from>
+                                        <bpel:to part="parameters" variable="AlmacenPLRequest1">
+                                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[referenciaProducto]]></bpel:query>
+                                        </bpel:to>
+                                    </bpel:copy>
+                                </bpel:assign>
+                                <bpel:invoke name="InvokeAP3" partnerLink="AlmacenPL" operation="actualizarStock" portType="ns:ServicioAlmacen" inputVariable="AlmacenPLRequest1" outputVariable="AlmacenPLResponse1"></bpel:invoke>
+                            </bpel:sequence>
+                        </bpel:elseif><bpel:else>
+                            <bpel:assign validate="no" name="AssignNoHaý">
+                                <bpel:copy>
+                                    <bpel:from><bpel:literal><tns:practica2BResponse xmlns:tns="http://practica2B.mtis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tns:result>true</tns:result>
+</tns:practica2BResponse>
+</bpel:literal></bpel:from>
+                                    <bpel:to variable="output" part="payload"></bpel:to>
+                                </bpel:copy>
+                                <bpel:copy>
+                                    <bpel:from variable="hayStockAlmacen"></bpel:from>
+                                    <bpel:to part="payload" variable="output">
+                                        <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:result]]></bpel:query>
+                                    </bpel:to>
+                                </bpel:copy>
+                            </bpel:assign>
+                        </bpel:else></bpel:if>
+                </bpel:sequence>
+            </bpel:else>
+        
+        </bpel:if>
+        
+        
         <bpel:reply name="replyOutput" partnerLink="client" portType="tns:practica2B" operation="process" variable="output" />
+    
+        
     </bpel:sequence>
 </bpel:process>
 

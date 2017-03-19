@@ -44,7 +44,39 @@ import com.mysql.jdbc.PreparedStatement;
         		}
     		return cantidad;
     	}
+    	private String getDescripcionProducto(String referencia){
+        	String descripcion="";
+        	String sqlc = "select * from producto where referenciaProducto = '"
+               	 + referencia+"'";
+	       	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sqlc)){
+	        		  ResultSet rs = stmt.executeQuery();           		 
+	        		  while (rs.next()){
+	        			 descripcion= rs.getString("descripcion");
+	        			 return descripcion;
+	        		  }           		                    		 
+	        		} catch (SQLException sqle) { 
+	        		  System.out.println("Error en la ejecución:" 
+	        		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+	        		}
+        	return descripcion;
+        }
     	
+    	private String getNombreProducto(String referencia){
+        	String nombre="";
+        	String sqlc = "select * from producto where referenciaProducto = '"
+               	 + referencia+"'";
+	       	 try (PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sqlc)){
+	        		  ResultSet rs = stmt.executeQuery();           		 
+	        		  while (rs.next()){
+	        			 nombre= rs.getString("nombre");
+	        			 return nombre;
+	        		  }           		                    		 
+	        		} catch (SQLException sqle) { 
+	        		  System.out.println("Error en la ejecución:" 
+	        		    + sqle.getErrorCode() + " " + sqle.getMessage());    
+	        		}
+        	return nombre;
+        }
     	private float getPrecioProducto(String referencia){
         	float precio = -1;
         	String sqlc = "select * from producto where referenciaProducto = '"
@@ -162,11 +194,13 @@ import com.mysql.jdbc.PreparedStatement;
                 	 int cantidad=-1;               	 
                 	 if(cantAlmacen != 0){
                 		 String sqlc = "INSERT INTO producto"+
-                	 "(referenciaProducto,precio, stock) VALUES(?,?,?)";
+                	 "(referenciaProducto, nombre, descripcion, precio, stock) VALUES(?,?,?,?,?)";
                 		 try (PreparedStatement stmt = (PreparedStatement) conA.prepareStatement(sqlc)){
                 			 stmt.setString(1,ordenarCompra.getReferenciaProducto());
-                			 stmt.setFloat(2, getPrecioProducto(ordenarCompra.getReferenciaProducto()));
-                			 stmt.setInt(3,ordenarCompra.getNumeroUnidades());
+                			 stmt.setString(2,getNombreProducto(ordenarCompra.getReferenciaProducto()));
+                			 stmt.setString(3,getDescripcionProducto(ordenarCompra.getReferenciaProducto()));
+                			 stmt.setFloat(4, getPrecioProducto(ordenarCompra.getReferenciaProducto()));
+                			 stmt.setInt(5,ordenarCompra.getNumeroUnidades());
                 			 stmt.executeUpdate();         		 
                     		  resp.setOut(true);
                     		  return resp;

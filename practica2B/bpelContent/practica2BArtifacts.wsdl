@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://practica2B.mtis" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://www.example.org/ServicioAlmacen/" name="practica2B" targetNamespace="http://practica2B.mtis">
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://practica2B.mtis" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://www.example.org/ServicioAlmacen/" xmlns:wsdl1="http://www.example.org/ServicioProveedor/" xmlns:wsdl2="http://www.example.org/p1/" xmlns:wsdl3="http://www.example.org/p2/" xmlns:wsdl4="http://www.example.org/p3/" name="practica2B" targetNamespace="http://practica2B.mtis">
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      TYPE DEFINITION - List of types participating in this BPEL process 
@@ -10,15 +10,36 @@
     <plnk:partnerLinkType name="AlmacenPLN">
     <plnk:role name="AlmacenRole" portType="wsdl:ServicioAlmacen"/>
   </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="actualizar1PLN">
+    <plnk:role name="actualizar1Role" portType="wsdl2:p1"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="actualizar2PLM">
+    <plnk:role name="actualizar2Role" portType="wsdl3:p2"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="actualizar3PLN">
+    <plnk:role name="actualizar3PLN" portType="wsdl4:p3"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="p1PLN">
+    <plnk:role name="p1Role" portType="wsdl2:p1"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="p2PLN">
+    <plnk:role name="p2Role" portType="wsdl3:p2"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="p3PLN">
+    <plnk:role name="p3Role" portType="wsdl4:p3"/>
+  </plnk:partnerLinkType>
     <import location="ServicioAlmacen.wsdl" namespace="http://www.example.org/ServicioAlmacen/"/>
+    <import location="p1.wsdl" namespace="http://www.example.org/p1/"/>
+    <import location="p2.wsdl" namespace="http://www.example.org/p2/"/>
+    <import location="p3.wsdl" namespace="http://www.example.org/p3/"/>
     <types>
         <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://practica2B.mtis">
 
             <element name="practica2BRequest">
                 <complexType>
                     <sequence>
-                    	<element name="numeroUnidades" type="int" />
-                    	<element name="referenciaProducto" type="string"></element>
+                    	<element name="numeroUnidades" type="int"/>
+                    	<element name="referenciaProducto" type="string"/>
                     </sequence>
                 </complexType>
             </element>
@@ -70,15 +91,14 @@
      for a web service.
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <binding name="practica2BBinding" type="tns:practica2B">
-    	<soap:binding style="document"
-    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     	<operation name="process">
-    		<soap:operation soapAction="http://practica2B.mtis/process" />
+    		<soap:operation soapAction="http://practica2B.mtis/process"/>
     		<input>
-    			<soap:body use="literal" />
+    			<soap:body use="literal"/>
     		</input>
     		<output>
-    			<soap:body use="literal" />
+    			<soap:body use="literal"/>
     		</output>
     	</operation>
     </binding>

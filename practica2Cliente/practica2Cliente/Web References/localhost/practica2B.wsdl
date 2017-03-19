@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsdl1="http://www.example.org/ServicioProveedor/" xmlns:wsdl3="http://www.example.org/p2/" xmlns:wsdl2="http://www.example.org/p1/" xmlns:wsdl4="http://www.example.org/p3/" xmlns:tns="http://practica2B.mtis" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://www.example.org/ServicioAlmacen/" name="practica2B" targetNamespace="http://practica2B.mtis" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <plnk:partnerLinkType name="AlmacenPLN">
+    <plnk:role name="AlmacenRole" portType="wsdl:ServicioAlmacen" />
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="actualizar1PLN">
+    <plnk:role name="actualizar1Role" portType="wsdl2:p1" />
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="actualizar2PLM">
+    <plnk:role name="actualizar2Role" portType="wsdl3:p2" />
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="actualizar3PLN">
+    <plnk:role name="actualizar3PLN" portType="wsdl4:p3" />
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="p1PLN">
+    <plnk:role name="p1Role" portType="wsdl2:p1" />
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="p2PLN">
+    <plnk:role name="p2Role" portType="wsdl3:p2" />
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="p3PLN">
+    <plnk:role name="p3Role" portType="wsdl4:p3" />
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="practica2B">
+    <plnk:role name="practica2BProvider" portType="tns:practica2B" />
+  </plnk:partnerLinkType>
+  <import namespace="http://www.example.org/ServicioAlmacen/" location="ServicioAlmacen.wsdl" />
+  <import namespace="http://www.example.org/p1/" location="p1.wsdl" />
+  <import namespace="http://www.example.org/p2/" location="p2.wsdl" />
+  <import namespace="http://www.example.org/p3/" location="p3.wsdl" />
+  <types>
+    <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://practica2B.mtis" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="practica2BRequest">
+        <complexType>
+          <sequence>
+            <element name="numeroUnidades" type="int" />
+            <element name="referenciaProducto" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="practica2BResponse">
+        <complexType>
+          <sequence>
+            <element name="result" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="practica2BRequestMessage">
+    <part name="payload" element="tns:practica2BRequest" />
+  </message>
+  <message name="practica2BResponseMessage">
+    <part name="payload" element="tns:practica2BResponse" />
+  </message>
+  <portType name="practica2B">
+    <operation name="process">
+      <input message="tns:practica2BRequestMessage" />
+      <output message="tns:practica2BResponseMessage" />
+    </operation>
+  </portType>
+  <binding name="practica2BBinding" type="tns:practica2B">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="process">
+      <soap:operation soapAction="http://practica2B.mtis/process" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="practica2BService">
+    <port name="practica2BPort" binding="tns:practica2BBinding">
+      <soap:address location="http://localhost:8080/ode/processes/practica2B" />
+    </port>
+  </service>
+</definitions>

@@ -28,9 +28,9 @@ CREATE TABLE IF NOT EXISTS `producto` (
 -- Volcando datos para la tabla almacen.producto: 4 rows
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
 INSERT INTO `producto` (`referenciaProducto`, `nombre`, `descripcion`, `precio`, `stock`) VALUES
-	('abc', 'Lenovo Thinkpad', 'Macnifico portátil', 999.45, 12),
-	('dfg', 'Teclado', 'Para gamming', 22.22, 233),
-	('hij', 'Mouse logitech', 'Ratón económico', 7.56, 20),
+	('abc', 'Lenovo Thinkpad', 'Macnifico portátil', 999.45, 1),
+	('dfg', 'Teclado', 'Para gamming', 22.22, 193),
+	('hij', 'Mouse logitech', 'Ratón económico', 7.56, 18),
 	('lmn', 'Pantalla asus', 'Pantalla 19', 100.56, 2);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 
@@ -52,8 +52,9 @@ CREATE TABLE IF NOT EXISTS `producto` (
 -- Volcando datos para la tabla proveedor1.producto: 2 rows
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
 INSERT INTO `producto` (`referenciaProducto`, `nombre`, `descripcion`, `precio`, `stock`) VALUES
-	('abc', 'Lenovo Thinkpad', 'Macnifico portátil', 500.04, 12),
-	('dfg', 'Teclado', 'Para gamming', 10.2, 233);
+	('abc', 'Lenovo Thinkpad', 'Macnifico portátil', 500.04, 1),
+	('dfg', 'Teclado', 'Para gamming', 10.2, 228),
+	('xyz', 'Apple pen', '..', 21, 19);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 
 
@@ -74,9 +75,11 @@ CREATE TABLE IF NOT EXISTS `producto` (
 -- Volcando datos para la tabla proveedor2.producto: 3 rows
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
 INSERT INTO `producto` (`referenciaProducto`, `nombre`, `descripcion`, `precio`, `stock`) VALUES
-	('abc', 'Lenovo Thinkpad', 'Macnifico portátil', 200.04, 1),
+	('abc', 'Lenovo Thinkpad', 'Macnifico portátil', 200.04, 2),
 	('lmn', 'Pantalla asus', 'Pantalla 19', 70.45, 23),
-	('hij', 'Mouse logitech', 'Ratón económico', 6.06, 23);
+	('hij', 'Mouse logitech', 'Ratón económico', 6.06, 23),
+	('opq', 'Torre Lenovo', '..', 600, 18),
+	('bbb', 'Torre Lenovo', '..', 600, 17);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 
 
@@ -98,7 +101,8 @@ CREATE TABLE IF NOT EXISTS `producto` (
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
 INSERT INTO `producto` (`referenciaProducto`, `nombre`, `descripcion`, `precio`, `stock`) VALUES
 	('hij', 'Mouse logitech', 'Ratón económico', 4.06, 1),
-	('lmn', 'Pantalla asus', 'Pantalla 19', 70.45, 23);
+	('lmn', 'Pantalla asus', 'Pantalla 19', 70.45, 20),
+	('opq', 'Torre Lenovo', 'Macnifica torre', 700, 11);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="practica2Cliente.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="practica2Cliente_localhost_p2" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:9080/p22/services/p2</Value>
+    </Setting>
+    <Setting Name="practica2Cliente_localhost_ServicioAlmacen" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:9080/practica2Almacen/services/ServicioAlmacen</Value>
+    </Setting>
+    <Setting Name="practica2Cliente_localhost_practica2BService" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/ode/processes/practica2B</Value>
+    </Setting>
+    <Setting Name="practica2Cliente_localhost_p1" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:9080/p21/services/p1</Value>
+    </Setting>
+    <Setting Name="practica2Cliente_localhost_p3" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:9080/p23/services/p3</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://localhost:8080/ode/deployment/bundles/practica2B/p2.wsdl" filename="p2.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://localhost:8080/ode/deployment/bundles/practica2B/ServicioAlmacen.wsdl" filename="ServicioAlmacen.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://localhost:8080/ode/deployment/bundles/practica2B/p3.wsdl" filename="p3.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://localhost:8080/ode/deployment/bundles/practica2B/p1.wsdl" filename="p1.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://localhost:8080/ode/deployment/bundles/practica2B/practica2BArtifacts.wsdl" filename="practica2B.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>
