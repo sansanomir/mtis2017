@@ -29,7 +29,7 @@ namespace practica2Cliente
         {
             rq.numeroUnidades = Int32.Parse(textBoxUnidades.Text);
             rq.referenciaProducto = textBoxReferencia.Text;
-            sv.process(rq);
+            //sv.process(rq);
             rp = this.sv.process(rq);
             labelResultado.Text = rp.result.ToString();
         }
