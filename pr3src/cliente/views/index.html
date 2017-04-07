@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Administrador</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<script src="./web/index.js"></script>
+	<h1>Aplicación cliente</h1>
+	<h3>Modificar valores:</h3>
+		<p>Temperatura 1:
+		<input type="text" id="temperatura1">
+		</p>
+		<p>Humedad 1:
+		<input type="text" id="humedad1">
+		</p>
+		<br>
+		<p>Temperatura 2:
+		<input type="text" id="temperatura2">
+		</p>
+		<p> Humedad 2:
+		<input type="text" id="humedad2">
+		</p>
+		<input type="button" id='button' class="btn btn-primary btn-xs" value="Modificar">
+	<script>
+  	document.getElementById('button').addEventListener('click',function(){
+			miFuncion(document.getElementById('temperatura1').value,
+								document.getElementById('humedad1').value,
+								document.getElementById('temperatura2').value,
+								document.getElementById('humedad2').value,
+							);
+			document.getElementById('temperatura1').value="";
+			document.getElementById('humedad2').value="";
+			document.getElementById('temperatura2').value="";
+			document.getElementById('humedad2').value="";
+		});
+	</script>
+</body>
+</html>
